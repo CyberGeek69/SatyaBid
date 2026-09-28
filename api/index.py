@@ -14,7 +14,6 @@ for p in [ROOT_DIR, MVP_DIR]:
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
-from fastapi.staticfiles import StaticFiles
 
 from satyabid import AuditLedger
 import run_mvp
@@ -33,14 +32,33 @@ app.add_middleware(
 
 @app.middleware("http")
 async def vercel_path_rewrite_middleware(request: Request, call_next):
-    # Vercel rewrites provide the original client path in x-matched-path
-    matched_path = request.headers.get("x-matched-path")
-    if matched_path:
-        request.scope["path"] = matched_path
-    elif request.scope["path"].startswith("/api/index"):
-        # If routed to /api/index, strip prefix
-        rem = request.scope["path"][len("/api/index"):]
-        request.scope["path"] = rem if rem.startswith("/") else ("/" + rem)
+    # Check _path passed by Vercel rewrite rule
+    req_subpath = request.query_params.get("_path")
+    if req_subpath is not None:
+        p = req_subpath.strip()
+        if not p or p == "/":
+            clean_path = "/"
+        else:
+            clean = "/" + p.lstrip("/")
+            api_routes = [
+                "/health", "/analysis", "/audit", "/verify",
+                "/download-audit", "/run-scrutiny", "/run-scrutiny-stream"
+            ]
+            if clean in api_routes or clean.startswith("/api/"):
+                clean_path = clean if clean.startswith("/api/") else ("/api" + clean)
+            else:
+                clean_path = clean
+        request.scope["path"] = clean_path
+    else:
+        # Fallback to headers
+        matched = (
+            request.headers.get("x-vercel-matched-path")
+            or request.headers.get("x-matched-path")
+            or request.headers.get("x-forwarded-uri")
+        )
+        if matched and not matched.startswith("/api/index"):
+            request.scope["path"] = matched
+
     response = await call_next(request)
     return response
 
@@ -169,7 +187,7 @@ def get_app_js():
 
 
 # -------------------------------------------------------------
-# API Scrutiny Endpoints
+# API Scrutiny Endpoints (Available on both /api/* and /*)
 # -------------------------------------------------------------
 @app.get("/api/health")
 @app.get("/health")
