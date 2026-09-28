@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+# Node (if Phase 1 uses a JS frontend)
+node_modules/
+dist/
+build/
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Local outputs (regenerable)
+mvp/outputs/
