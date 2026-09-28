@@ -11,7 +11,7 @@ for p in [ROOT_DIR, MVP_DIR]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -30,19 +30,48 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_DIR = os.path.join(MVP_DIR, "data")
-OUTPUTS_DIR = os.path.join(MVP_DIR, "outputs")
-WEB_DIR = os.path.join(MVP_DIR, "web")
 
-# In-memory caches to handle read-only environments (such as Vercel Serverless)
+@app.middleware("http")
+async def vercel_path_rewrite_middleware(request: Request, call_next):
+    # Vercel rewrites provide the original client path in x-matched-path
+    matched_path = request.headers.get("x-matched-path")
+    if matched_path:
+        request.scope["path"] = matched_path
+    elif request.scope["path"].startswith("/api/index"):
+        # If routed to /api/index, strip prefix
+        rem = request.scope["path"][len("/api/index"):]
+        request.scope["path"] = rem if rem.startswith("/") else ("/" + rem)
+    response = await call_next(request)
+    return response
+
+
+def resolve_dir(subpath):
+    for candidate in [
+        os.path.join(MVP_DIR, subpath),
+        os.path.join(ROOT_DIR, "mvp", subpath),
+        os.path.join(os.getcwd(), "mvp", subpath),
+        os.path.join(ROOT_DIR, subpath),
+        os.path.join(os.getcwd(), subpath),
+    ]:
+        if os.path.exists(candidate):
+            return candidate
+    return os.path.join(MVP_DIR, subpath)
+
+
+DATA_DIR = resolve_dir("data")
+OUTPUTS_DIR = resolve_dir("outputs")
+WEB_DIR = resolve_dir("web")
+
+# In-memory caches to handle read-only serverless environments
 _cached_analysis = None
 _cached_audit = None
 _current_ledger = None
 
 
 def get_tender_and_bids():
-    tender = os.path.join(DATA_DIR, "tender.pdf")
-    bids = sorted(glob.glob(os.path.join(DATA_DIR, "bids", "*.pdf")))
+    data_dir = resolve_dir("data")
+    tender = os.path.join(data_dir, "tender.pdf")
+    bids = sorted(glob.glob(os.path.join(data_dir, "bids", "*.pdf")))
     return tender, bids
 
 
@@ -62,12 +91,12 @@ def execute_pipeline(stage_callback=None):
     _cached_audit = audit_list
     _current_ledger = ledger
 
-    # Try saving to disk if writable (non-critical in serverless environments)
     try:
-        os.makedirs(OUTPUTS_DIR, exist_ok=True)
-        with open(os.path.join(OUTPUTS_DIR, "analysis.json"), "w", encoding="utf-8") as f:
+        outputs_dir = resolve_dir("outputs")
+        os.makedirs(outputs_dir, exist_ok=True)
+        with open(os.path.join(outputs_dir, "analysis.json"), "w", encoding="utf-8") as f:
             json.dump(result, f, indent=2, ensure_ascii=False)
-        with open(os.path.join(OUTPUTS_DIR, "audit_log.json"), "w", encoding="utf-8") as f:
+        with open(os.path.join(outputs_dir, "audit_log.json"), "w", encoding="utf-8") as f:
             json.dump(audit_list, f, indent=2, ensure_ascii=False)
     except Exception:
         pass
@@ -80,9 +109,9 @@ def get_analysis_data():
     if _cached_analysis and _cached_audit:
         return _cached_analysis
 
-    # Check pre-generated disk outputs if available
-    analysis_file = os.path.join(OUTPUTS_DIR, "analysis.json")
-    audit_file = os.path.join(OUTPUTS_DIR, "audit_log.json")
+    outputs_dir = resolve_dir("outputs")
+    analysis_file = os.path.join(outputs_dir, "analysis.json")
+    audit_file = os.path.join(outputs_dir, "audit_log.json")
     if os.path.exists(analysis_file) and os.path.exists(audit_file):
         try:
             with open(analysis_file, "r", encoding="utf-8") as f:
@@ -108,7 +137,42 @@ def get_audit_data():
     return _cached_audit or []
 
 
+# -------------------------------------------------------------
+# Frontend Static Asset Routes
+# -------------------------------------------------------------
+@app.get("/")
+@app.get("/index.html")
+def get_index():
+    web_dir = resolve_dir("web")
+    index_file = os.path.join(web_dir, "index.html")
+    if os.path.exists(index_file):
+        return FileResponse(index_file, media_type="text/html")
+    return {"message": "SatyaBid Backend Running", "status": "ok"}
+
+
+@app.get("/style.css")
+def get_style():
+    web_dir = resolve_dir("web")
+    css_file = os.path.join(web_dir, "style.css")
+    if os.path.exists(css_file):
+        return FileResponse(css_file, media_type="text/css")
+    raise HTTPException(status_code=404, detail="style.css not found")
+
+
+@app.get("/app.js")
+def get_app_js():
+    web_dir = resolve_dir("web")
+    js_file = os.path.join(web_dir, "app.js")
+    if os.path.exists(js_file):
+        return FileResponse(js_file, media_type="application/javascript")
+    raise HTTPException(status_code=404, detail="app.js not found")
+
+
+# -------------------------------------------------------------
+# API Scrutiny Endpoints
+# -------------------------------------------------------------
 @app.get("/api/health")
+@app.get("/health")
 def health():
     return {
         "status": "ok",
@@ -119,16 +183,19 @@ def health():
 
 
 @app.get("/api/analysis")
+@app.get("/analysis")
 def api_analysis():
     return get_analysis_data()
 
 
 @app.get("/api/audit")
+@app.get("/audit")
 def api_audit():
     return get_audit_data()
 
 
 @app.get("/api/verify")
+@app.get("/verify")
 def api_verify():
     global _current_ledger
     if _current_ledger is not None:
@@ -152,6 +219,7 @@ def api_verify():
 
 
 @app.get("/api/download-audit")
+@app.get("/download-audit")
 def api_download_audit():
     audit_list = get_audit_data()
     content = json.dumps(audit_list, indent=2, ensure_ascii=False)
@@ -163,12 +231,14 @@ def api_download_audit():
 
 
 @app.post("/api/run-scrutiny")
+@app.post("/run-scrutiny")
 def api_run_scrutiny():
     result, _ = execute_pipeline()
     return result
 
 
 @app.get("/api/run-scrutiny-stream")
+@app.get("/run-scrutiny-stream")
 def api_run_scrutiny_stream():
     events = []
 
@@ -185,8 +255,3 @@ def api_run_scrutiny_stream():
             yield ev
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")
-
-
-# Mount static web directory for direct FastAPI execution (e.g. uvicorn api.index:app)
-if os.path.exists(WEB_DIR):
-    app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="static-web")

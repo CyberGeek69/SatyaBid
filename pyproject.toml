@@ -1,2 +1,16 @@
+[project]
+name = "satyabid"
+version = "0.1.0"
+description = "Intelligent Bid Scrutiny & Cartel Detection"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.20.0",
+    "pymupdf>=1.23",
+    "networkx>=3.0",
+    "reportlab>=4.0",
+    "matplotlib>=3.6",
+]
+
 [tool.vercel]
-entrypoint = "api/index.py"
+entrypoint = "api.index:app"

@@ -1,13 +1,19 @@
 {
   "version": 2,
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "mvp/**",
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "destination": "/api/index"
     },
     {
       "source": "/(.*)",
-      "destination": "/mvp/web/$1"
+      "destination": "/api/index"
     }
   ]
 }
