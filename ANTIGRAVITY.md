@@ -33,7 +33,7 @@ scratch — rebuild the UI on top of it, then extend it.
 | `mvp/run_mvp.py` | Headless CLI pipeline | ✅ working |
 | `mvp/diagnose.py` | 8-stage backend diagnostic, all PASS | ✅ working |
 | `mvp/tests/test_mvp.py` | Ground-truth tests, all PASS | ✅ working |
-| `mvp/app.py` | Old Streamlit UI | ⚠️ **replace** — this is the "just the UI" the human rejected |
+| `mvp/streamlit_legacy.py` | Old Streamlit UI | ⚠️ **retired** — replaced by Phase 1 S1–S7 web app |
 
 Verify before you build: `cd mvp && pip install -r requirements.txt &&
 python diagnose.py` — all 8 stages must PASS. If any fail, fix the engine

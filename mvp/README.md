@@ -40,8 +40,11 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 # ground-truth tests (planted fraud must be caught, clean bid passed)
 .venv/bin/python tests/test_mvp.py
 
-# interactive demo UI
-.venv/bin/streamlit run app.py
+# interactive demo UI (Phase 1 web app)
+python serve.py
+
+# legacy prototype (archival)
+streamlit run streamlit_legacy.py
 ```
 
 ## Demo dataset ground truth

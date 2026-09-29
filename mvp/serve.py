@@ -9,16 +9,19 @@ Usage:
 """
 
 import argparse
+import base64
 import glob
 import json
 import mimetypes
 import os
+import re
 import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
 
+import pymupdf
 from satyabid import AuditLedger
 import run_mvp
 
@@ -57,6 +60,96 @@ def get_or_create_analysis():
 
     result["ledger_count"] = len(led_list)
     return result
+
+
+def validate_pdf_content(filename, content_base64, doc_type="tender"):
+    """Validate uploaded PDF document without crashing or hanging."""
+    if not filename or not filename.lower().endswith(".pdf"):
+        return {
+            "ok": False,
+            "error": "Could not parse this document: only PDF files are supported."
+        }
+    if not content_base64:
+        return {
+            "ok": False,
+            "error": "Could not parse this document: file content is empty."
+        }
+    try:
+        if "," in content_base64:
+            content_base64 = content_base64.split(",", 1)[1]
+        raw_bytes = base64.b64decode(content_base64)
+    except Exception:
+        return {
+            "ok": False,
+            "error": "Could not parse this document: could not decode file stream."
+        }
+
+    try:
+        doc = pymupdf.open(stream=raw_bytes, filetype="pdf")
+    except Exception as exc:
+        return {
+            "ok": False,
+            "error": "Could not parse this document: malformed or corrupted PDF format."
+        }
+
+    try:
+        pages_count = len(doc)
+        if pages_count == 0:
+            return {
+                "ok": False,
+                "error": "Could not parse this document: document contains no pages."
+            }
+
+        full_text = ""
+        for page in doc:
+            full_text += (page.get_text() or "") + "\n"
+
+        text_clean = full_text.strip()
+        if len(text_clean) < 20:
+            return {
+                "ok": False,
+                "error": "Could not parse this document: document contains no readable text or is an unsupported scan."
+            }
+
+        # Check for GeM procurement structure
+        if doc_type == "tender":
+            has_bid_num = bool(re.search(r"GEM/\d{4}/[A-Z]/\d+", text_clean, re.I))
+            has_turnover = "turnover" in text_clean.lower()
+            if not (has_bid_num or has_turnover):
+                return {
+                    "ok": False,
+                    "error": "Could not parse this document: missing required GeM RFP specification clauses (e.g. GeM bid number, turnover floor, local content). Please upload a valid GeM tender document."
+                }
+            return {
+                "ok": True,
+                "filename": filename,
+                "pages": pages_count,
+                "message": f"Parsed successfully ({pages_count} pages)"
+            }
+        else:
+            has_bidder = "bidder" in text_clean.lower() or "submission" in text_clean.lower()
+            has_financial = "ca" in text_clean.lower() or "turnover" in text_clean.lower() or "director" in text_clean.lower() or "partnership" in text_clean.lower()
+            if not (has_bidder and has_financial):
+                return {
+                    "ok": False,
+                    "error": "Could not parse this document: unrecognised bidder submission format. Missing Cover-1 eligibility schedules or certified turnover records."
+                }
+            return {
+                "ok": True,
+                "filename": filename,
+                "pages": pages_count,
+                "message": f"Parsed successfully ({pages_count} pages)"
+            }
+    except Exception as exc:
+        return {
+            "ok": False,
+            "error": f"Could not parse this document: error extracting content ({str(exc)[:60]})."
+        }
+    finally:
+        try:
+            doc.close()
+        except Exception:
+            pass
 
 
 class SatyaBidHTTPHandler(SimpleHTTPRequestHandler):
@@ -159,6 +252,23 @@ class SatyaBidHTTPHandler(SimpleHTTPRequestHandler):
                 json.dump(led_list, f, indent=2, ensure_ascii=False)
             result["ledger_count"] = len(led_list)
             self.send_json_response(result)
+            return
+        elif self.path == "/api/validate-document":
+            try:
+                content_length = int(self.headers.get("Content-Length", 0))
+                post_body = self.rfile.read(content_length)
+                data = json.loads(post_body.decode("utf-8"))
+                res = validate_pdf_content(
+                    data.get("filename", ""),
+                    data.get("content", ""),
+                    data.get("doc_type", "tender")
+                )
+                self.send_json_response(res)
+            except Exception as e:
+                self.send_json_response({
+                    "ok": False,
+                    "error": f"Could not parse this document: invalid request data ({str(e)[:50]})"
+                })
             return
 
         self.send_error(404, "Endpoint not found")

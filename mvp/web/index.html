@@ -41,14 +41,16 @@
         <input type="text" id="bidder-search" placeholder="Search bidders…" autocomplete="off">
       </div>
 
-      <button class="btn btn-secondary btn-export" id="btn-export-report" disabled title="Coming in Phase 2">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        <span>Export report</span>
-      </button>
+      <div class="export-btn-wrap" title="Coming in Phase 2">
+        <button class="btn btn-secondary btn-export" id="btn-export-report" disabled title="Coming in Phase 2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Export report</span>
+        </button>
+      </div>
 
       <div class="user-profile" title="Logged in as Tender Evaluation Officer">
         <div class="avatar">EO</div>
@@ -66,29 +68,75 @@
     <aside class="sidebar" id="app-sidebar">
       <nav class="sidebar-nav">
         <a href="#new-scrutiny" class="nav-item" id="nav-s1" title="New scrutiny">
-          <span class="nav-icon">①</span>
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="12" y2="12"></line>
+              <line x1="15" y1="15" x2="12" y2="12"></line>
+            </svg>
+          </span>
           <span class="nav-label">New scrutiny</span>
         </a>
         <a href="#dashboard" class="nav-item active" id="nav-s3" title="Dashboard">
-          <span class="nav-icon">②</span>
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </span>
           <span class="nav-label">Dashboard</span>
         </a>
         <a href="#dossier" class="nav-item" id="nav-s4" title="Bidders">
-          <span class="nav-icon">③</span>
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
           <span class="nav-label">Bidders</span>
           <span class="nav-badge" id="nav-badge-bidders">5</span>
         </a>
         <a href="#evidence" class="nav-item" id="nav-s5" title="Evidence viewer">
-          <span class="nav-icon">🔍</span>
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
           <span class="nav-label">Evidence viewer</span>
         </a>
         <a href="#collusion" class="nav-item" id="nav-s6" title="Collusion graph">
-          <span class="nav-icon">④</span>
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </span>
           <span class="nav-label">Collusion graph</span>
-          <span class="nav-badge alert" id="nav-badge-collusion">1 ring alert</span>
+          <span class="nav-badge alert" id="nav-badge-collusion">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 3px;">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>1 ring alert
+          </span>
         </a>
         <a href="#audit" class="nav-item" id="nav-s7" title="Audit trail">
-          <span class="nav-icon">⑤</span>
+          <span class="nav-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </span>
           <span class="nav-label">Audit trail</span>
           <span class="nav-badge" id="nav-badge-audit">14</span>
         </a>
@@ -137,53 +185,63 @@
 
             <div class="upload-sections-wrap">
               <!-- Tender PDF drop zone -->
-              <div class="upload-zone" id="zone-tender">
-                <div class="upload-zone-label">Tender Document (RFP)</div>
+              <div class="upload-zone" id="zone-tender" tabindex="0" role="region" aria-label="Tender RFP Upload Zone">
+                <input type="file" id="input-tender-pdf" accept=".pdf,application/pdf" style="display: none;">
+                <div class="upload-zone-header">
+                  <div class="upload-zone-label">Tender Document (RFP)</div>
+                  <button type="button" class="btn-zone-browse" id="btn-browse-tender">Select PDF</button>
+                </div>
                 <div class="file-chip-list" id="tender-file-list">
-                  <div class="file-chip primary-file">
+                  <div class="file-chip primary-file" id="chip-tender-default">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">tender.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
                     <span class="file-chip-status">✓ parsed</span>
                   </div>
                 </div>
+                <div class="upload-inline-error" id="error-tender" style="display: none;"></div>
               </div>
 
               <!-- Bidder PDFs drop zone -->
-              <div class="upload-zone" id="zone-bids">
-                <div class="upload-zone-label">Bidder Submissions (Cover-1 Packets)</div>
+              <div class="upload-zone" id="zone-bids" tabindex="0" role="region" aria-label="Bidder Submissions Upload Zone">
+                <input type="file" id="input-bids-pdf" accept=".pdf,application/pdf" multiple style="display: none;">
+                <div class="upload-zone-header">
+                  <div class="upload-zone-label">Bidder Submissions (Cover-1 Packets)</div>
+                  <button type="button" class="btn-zone-browse" id="btn-browse-bids">Select PDFs</button>
+                </div>
                 <div class="file-chip-list" id="bids-file-list">
-                  <div class="file-chip">
+                  <div class="file-chip" id="chip-bidder-A">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_A_Apex.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
                     <span class="file-chip-status">✓ parsed</span>
                   </div>
-                  <div class="file-chip">
+                  <div class="file-chip" id="chip-bidder-B">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_B_Brightline.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
                     <span class="file-chip-status">✓ parsed</span>
                   </div>
-                  <div class="file-chip">
+                  <div class="file-chip" id="chip-bidder-C">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_C_Crestline.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
                     <span class="file-chip-status">✓ parsed</span>
                   </div>
-                  <div class="file-chip">
+                  <div class="file-chip" id="chip-bidder-D">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_D_Deltaforce.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
                     <span class="file-chip-status">✓ parsed</span>
                   </div>
-                  <div class="file-chip">
+                  <div class="file-chip" id="chip-bidder-E">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_E_Everest.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
                     <span class="file-chip-status">✓ parsed</span>
                   </div>
                 </div>
+                <div class="upload-inline-error" id="error-bids" style="display: none;"></div>
               </div>
             </div>
 
@@ -260,7 +318,7 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          <span>Registries (GSTN/Udyam/MCA) run as simulated checks in this build — labeled wherever they appear.</span>
+          <span>Registries (GSTN / Udyam / MCA / DPIIT) run as simulated checks in this build — labeled with <span class="badge-simulated">SIMULATED</span> wherever they appear.</span>
         </div>
       </section>
 
@@ -518,7 +576,7 @@
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
               </svg>
-              <span>Registries (GSTN/Udyam/MCA) run as simulated checks in this build — labeled wherever they appear.</span>
+              <span>Registries (GSTN / Udyam / MCA / DPIIT) run as simulated checks in this build — labeled with <span class="badge-simulated">SIMULATED</span> wherever they appear.</span>
             </div>
             <div class="timestamp-badge" id="audit-count-badge">
               14 ledger entries committed
@@ -669,7 +727,15 @@
           <div class="evidence-pane clause-pane" id="pane-left">
             <div class="evidence-pane-header">
               <div class="pane-title-group">
-                <span class="pane-icon" id="pane-left-icon">📜</span>
+                <span class="pane-icon" id="pane-left-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                </span>
                 <span class="pane-title" id="pane-left-title">TENDER CLAUSE</span>
               </div>
               <div class="page-chip-wrap">
@@ -690,7 +756,15 @@
           <div class="evidence-pane doc-pane" id="pane-right">
             <div class="evidence-pane-header">
               <div class="pane-title-group">
-                <span class="pane-icon" id="pane-right-icon">📄</span>
+                <span class="pane-icon" id="pane-right-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="12" y2="12"></line>
+                    <line x1="15" y1="15" x2="12" y2="12"></line>
+                  </svg>
+                </span>
                 <span class="pane-title" id="pane-right-title">BIDDER DOCUMENT</span>
               </div>
               <div class="page-chip-wrap">
@@ -820,7 +894,13 @@
             <div class="ring-alert-card" id="ring-alert-card">
               <div class="ring-alert-header">
                 <div class="ring-alert-title-wrap">
-                  <span class="ring-alert-icon">🚨</span>
+                  <span class="ring-alert-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </span>
                   <div class="ring-alert-titles">
                     <h4 class="ring-alert-heading" id="ring-alert-heading">Suspected Ring: C + D</h4>
                     <span class="ring-alert-subheading" id="ring-alert-subheading">5 signals · Risk score 13.32</span>

@@ -160,6 +160,10 @@ const BIDDER_FACTS_MAP = {
     directorCount: 2,
     phone: "98470-11223",
     address: "14, Guindy Industrial Estate, Chennai 600032",
+    docAuthor: "Apex-Office-PC",
+    gstn: "Active (33AABCA1234F1Z5)",
+    udyam: "Verified (UDYAM-TN-02-0012345)",
+    mca: "ROC Chennai / LLP Master Data",
     ca: "CA R. Venkatesh (FCA-023418)",
     localContent: "62.0% (Class-I Local Supplier)",
     price: 43200000,
@@ -171,6 +175,10 @@ const BIDDER_FACTS_MAP = {
     directorCount: 1,
     phone: "98111-22334",
     address: "22, HSR Layout Sector 2, Bengaluru 560102",
+    docAuthor: "Brightline-Laptop",
+    gstn: "Active (29AABCB5678G1Z2)",
+    udyam: "Verified (UDYAM-KR-03-0054321)",
+    mca: "ROC Bengaluru / Active",
     ca: "CA D. Kulkarni (FCA-0987X4 — invalid format)",
     localContent: "58.0% (Class-I Local Supplier)",
     price: 45500000,
@@ -182,10 +190,14 @@ const BIDDER_FACTS_MAP = {
     directorCount: 3,
     phone: "98200-44556",
     address: "8, Andheri MIDC, Mumbai 400093",
+    docAuthor: "Crestline-PC-03",
+    gstn: "Active (27AABCC9012H1Z9)",
+    udyam: "Verified (UDYAM-MH-01-0098765)",
+    mca: "ROC Mumbai / CIN U72900MH2018PTC123456",
     ca: "CA P. Bhatt (ACA-117204)",
     localContent: "55.0% (Class-I Local Supplier)",
     price: 44100000,
-    collusionNote: "🚨 Suspected Ring: C + D (5 shared signals: 2 directors, phone, address, doc author, 0.68% price band)"
+    collusionNote: "Suspected Ring: C + D (5 shared signals: 2 directors, phone, address, doc author, 0.68% price band)"
   },
   D: {
     city: "Mumbai",
@@ -193,10 +205,14 @@ const BIDDER_FACTS_MAP = {
     directorCount: 3,
     phone: "98200-44556",
     address: "8, Andheri MIDC, Mumbai 400093",
+    docAuthor: "Crestline-PC-03",
+    gstn: "Active (27AABCD3456J1Z6)",
+    udyam: "Verified (UDYAM-MH-01-0098766)",
+    mca: "ROC Mumbai / CIN U72900MH2019PTC654321",
     ca: "CA P. Bhatt (ACA-117204)",
     localContent: "52.0% (Class-I Local Supplier)",
     price: 44400000,
-    collusionNote: "🚨 Suspected Ring: C + D (5 shared signals: 2 directors, phone, address, doc author, 0.68% price band)"
+    collusionNote: "Suspected Ring: C + D (5 shared signals: 2 directors, phone, address, doc author, 0.68% price band)"
   },
   E: {
     city: "Pune",
@@ -204,6 +220,10 @@ const BIDDER_FACTS_MAP = {
     directorCount: 2,
     phone: "98333-77889",
     address: "5, Hinjewadi Phase 1, Pune 411057",
+    docAuthor: "Everest-PC-01",
+    gstn: "Active (27AABCE7890K1Z3)",
+    udyam: "Verified (UDYAM-MH-04-0045678)",
+    mca: "ROC Pune / Active",
     ca: "CA S. Patil (FCA-066531)",
     localContent: "28.0% (Invalid Class-I claim — qualifies only as Class-II)",
     price: 46100000,
@@ -238,11 +258,13 @@ class SatyaBidApp {
     this.selectedBidderId = 'C';
     this.selectedRuleIndex = 1;
     this.selectedPairKey = "C-D";
+    this.uploadError = false;
     this.init();
   }
 
   async init() {
     this.bindGlobalEvents();
+    this.initUploadHandlers();
     await this.loadAnalysis();
     await this.loadAuditTrail();
     this.initEvidenceControls();
@@ -401,6 +423,182 @@ class SatyaBidApp {
     if (exportBtn) {
       exportBtn.addEventListener('click', () => alert('Export report is scheduled for Phase 2 per ROADMAP.md.'));
     }
+  }
+
+  initUploadHandlers() {
+    this.uploadError = false;
+
+    const setupZone = (zoneId, inputId, browseBtnId, errorId, listId, docType) => {
+      const zone = document.getElementById(zoneId);
+      const input = document.getElementById(inputId);
+      const browseBtn = document.getElementById(browseBtnId);
+      const errorBox = document.getElementById(errorId);
+      const listEl = document.getElementById(listId);
+
+      if (!zone || !input) return;
+
+      if (browseBtn) {
+        browseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          input.click();
+        });
+      }
+
+      zone.addEventListener('click', (e) => {
+        if (e.target.closest('.file-chip') || e.target.closest('button')) return;
+        input.click();
+      });
+
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('dragover');
+      });
+
+      zone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+      });
+
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        const files = e.dataTransfer?.files;
+        if (files && files.length > 0) {
+          this.processUploadedFiles(Array.from(files), docType, errorBox, listEl);
+        }
+      });
+
+      input.addEventListener('change', (e) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+          this.processUploadedFiles(Array.from(files), docType, errorBox, listEl);
+        }
+        input.value = '';
+      });
+    };
+
+    setupZone('zone-tender', 'input-tender-pdf', 'btn-browse-tender', 'error-tender', 'tender-file-list', 'tender');
+    setupZone('zone-bids', 'input-bids-pdf', 'btn-browse-bids', 'error-bids', 'bids-file-list', 'bid');
+  }
+
+  async processUploadedFiles(files, docType, errorBox, listEl) {
+    const startBtn = document.getElementById('btn-start-scrutiny');
+
+    for (const file of files) {
+      // 1. Client-side extension check
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        this.showInlineUploadError(errorBox, `Could not parse this document ("${file.name}"): only digital PDF files are supported.`);
+        this.uploadError = true;
+        if (startBtn) startBtn.disabled = true;
+        this.renderErrorChip(listEl, file.name);
+        return;
+      }
+
+      // 2. Read as base64 and validate with backend
+      try {
+        const base64Content = await this.readFileAsBase64(file);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+        const resp = await fetch('/api/validate-document', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: file.name,
+            content: base64Content,
+            doc_type: docType
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        let data = {};
+        try {
+          data = await resp.json();
+        } catch (_) {
+          data = { ok: false, error: 'Could not parse this document: unreadable response from server.' };
+        }
+
+        if (!resp.ok || !data.ok) {
+          const errMsg = data.error || `Could not parse this document ("${file.name}").`;
+          this.showInlineUploadError(errorBox, errMsg);
+          this.uploadError = true;
+          if (startBtn) startBtn.disabled = true;
+          this.renderErrorChip(listEl, file.name);
+          return;
+        }
+
+        // Successfully parsed
+        this.clearInlineUploadError(errorBox);
+        this.uploadError = false;
+        if (startBtn) startBtn.disabled = false;
+        this.renderSuccessChip(listEl, file.name, data.pages || 2);
+
+      } catch (err) {
+        console.warn('Document validation error:', err);
+        const isTimeout = err.name === 'AbortError';
+        const msg = isTimeout 
+          ? `Could not parse this document ("${file.name}"): verification request timed out.`
+          : `Could not parse this document ("${file.name}"): unable to verify PDF structure.`;
+        this.showInlineUploadError(errorBox, msg);
+        this.uploadError = true;
+        if (startBtn) startBtn.disabled = true;
+        this.renderErrorChip(listEl, file.name);
+      }
+    }
+  }
+
+  showInlineUploadError(errorBox, msg) {
+    if (!errorBox) return;
+    errorBox.style.display = 'flex';
+    errorBox.innerHTML = `
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:1px;">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>${msg}</span>
+    `;
+  }
+
+  clearInlineUploadError(errorBox) {
+    if (!errorBox) return;
+    errorBox.style.display = 'none';
+    errorBox.innerHTML = '';
+  }
+
+  renderErrorChip(listEl, filename) {
+    if (!listEl) return;
+    const chip = document.createElement('div');
+    chip.className = 'file-chip error-file';
+    chip.innerHTML = `
+      <span class="file-chip-icon">⚠️</span>
+      <span class="file-chip-name">${filename}</span>
+      <span class="file-chip-status">✕ unparsable</span>
+    `;
+    listEl.prepend(chip);
+  }
+
+  renderSuccessChip(listEl, filename, pages) {
+    if (!listEl) return;
+    const chip = document.createElement('div');
+    chip.className = 'file-chip';
+    chip.innerHTML = `
+      <span class="file-chip-icon">📄</span>
+      <span class="file-chip-name">${filename}</span>
+      <span class="file-chip-meta">${pages} pages</span>
+      <span class="file-chip-status">✓ parsed</span>
+    `;
+    listEl.prepend(chip);
+  }
+
+  readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
   }
 
   async loadAnalysis() {
@@ -572,6 +770,12 @@ class SatyaBidApp {
   }
 
   runScrutinyPipeline() {
+    if (this.uploadError) {
+      const errBox = document.getElementById('error-tender');
+      this.showInlineUploadError(errBox, 'Could not parse this document. Please replace unparsable files or run the demo dataset.');
+      return;
+    }
+
     this.showScreen('stepper');
     this.resetStepper();
     this.setStepState(1, 'active', 'Ingesting…');
@@ -778,13 +982,13 @@ class SatyaBidApp {
       let collusionCell = '';
       const risk = v.collusion_risk || 'NONE';
       if (risk === 'HIGH') {
-        collusionCell = `<span class="pill pill-sm pill-risk-high"><span class="dot"></span>HIGH</span>`;
+        collusionCell = `<span class="pill pill-sm pill-risk-high" title="Risk: High (13.32) · Ring C+D detected"><span class="dot"></span>Risk: High</span>`;
       } else if (risk === 'MEDIUM') {
-        collusionCell = `<span class="pill pill-sm pill-risk-med"><span class="dot"></span>MEDIUM</span>`;
+        collusionCell = `<span class="pill pill-sm pill-risk-med" title="Risk: Medium"><span class="dot"></span>Risk: Med</span>`;
       } else if (risk === 'LOW') {
-        collusionCell = `<span class="pill pill-sm pill-risk-low"><span class="dot"></span>LOW</span>`;
+        collusionCell = `<span class="pill pill-sm pill-risk-low" title="Risk: Low (score 0.70 · Price proximity within 1.30%)"><span class="dot"></span>Risk: Low</span>`;
       } else {
-        collusionCell = `<span class="em-dash">—</span>`;
+        collusionCell = `<span class="em-dash" title="No cross-bidder collusion risk detected">—</span>`;
       }
 
       tr.innerHTML = `
@@ -926,6 +1130,7 @@ class SatyaBidApp {
             <div class="rule-header-left">
               ${statusCircle}
               <span class="rule-title-text">${ruleObj.name}</span>
+              ${(ruleId === 'R3' || ruleId === 'R4') ? '<span class="badge-simulated" title="Simulated registry verification" style="margin-left: 6px;">SIMULATED</span>' : ''}
             </div>
             <div class="rule-header-right">
               <a href="#evidence?bidder=${bId}&rule=${ruleId}" class="rule-evidence-link" title="Jump to side-by-side evidence">View evidence →</a>
@@ -1006,12 +1211,28 @@ class SatyaBidApp {
           <dd>${facts.address}</dd>
         </div>
         <div class="fact-row">
+          <dt>Document Author (PDF)</dt>
+          <dd><code>${facts.docAuthor || 'Apex-Office-PC'}</code></dd>
+        </div>
+        <div class="fact-row">
+          <dt>GSTN Status</dt>
+          <dd>${facts.gstn || 'Active'} <span class="badge-simulated" title="Simulated GSTN registry lookup">SIMULATED</span></dd>
+        </div>
+        <div class="fact-row">
+          <dt>Udyam Registration</dt>
+          <dd>${facts.udyam || 'Verified'} <span class="badge-simulated" title="Simulated Udyam registry lookup">SIMULATED</span></dd>
+        </div>
+        <div class="fact-row">
+          <dt>MCA Corporate Records</dt>
+          <dd>${facts.mca || 'Active'} <span class="badge-simulated" title="Simulated MCA registry lookup">SIMULATED</span></dd>
+        </div>
+        <div class="fact-row">
           <dt>Chartered Accountant</dt>
-          <dd>${facts.ca}</dd>
+          <dd>${facts.ca} <span class="badge-simulated" title="Simulated ICAI registry check">SIMULATED</span></dd>
         </div>
         <div class="fact-row">
           <dt>Local Content Declaration</dt>
-          <dd class="fact-highlight">${facts.localContent}</dd>
+          <dd class="fact-highlight">${facts.localContent} <span class="badge-simulated" title="Simulated DPIIT registry check">SIMULATED</span></dd>
         </div>
         <div class="fact-row">
           <dt>Quoted Price (Cover-2)</dt>
@@ -1104,8 +1325,10 @@ class SatyaBidApp {
     const footerPill = document.getElementById('footer-verdict-pill');
     if (footerPill) footerPill.innerHTML = pillHtml;
 
-    const ruleIdEl = document.getElementById('rationale-rule-id');
-    if (ruleIdEl) ruleIdEl.textContent = check.rule || currentRule.name;
+    const isSimulated = (ruleId === "R3" || ruleId === "R4");
+    if (ruleIdEl) {
+      ruleIdEl.innerHTML = (check.rule || currentRule.name) + (isSimulated ? ` <span class="badge-simulated" style="margin-left: 8px;">SIMULATED REGISTRY</span>` : '');
+    }
 
     const statusLabelEl = document.getElementById('rationale-status-label');
     if (statusLabelEl) statusLabelEl.textContent = `ENGINE FINDING: ${status}`;
@@ -1131,16 +1354,14 @@ class SatyaBidApp {
     const rightText = document.getElementById('pane-right-text');
 
     if (ruleId === "R2") {
-      if (leftIcon) leftIcon.textContent = "📄";
-      if (leftTitle) leftTitle.textContent = "BIDDER DOCUMENT A (Covering Letter)";
+      if (leftTitle) leftTitle.textContent = "COVERING LETTER";
       if (leftChip) leftChip.textContent = "bid p.1";
       if (leftMeta) leftMeta.textContent = "Bidder Covering Letter · Claimed Annual Turnover";
       
       const docAText = ev.document || "Covering letter claims Rs. 24,00,000/- average turnover";
       if (leftText) leftText.innerHTML = `"${highlightKeyFigures(docAText)}"`;
 
-      if (rightIcon) rightIcon.textContent = "📄";
-      if (rightTitle) rightTitle.textContent = "BIDDER DOCUMENT B (CA Certificate)";
+      if (rightTitle) rightTitle.textContent = "CA CERTIFICATE";
       const docPage = ev.doc_page || 2;
       if (rightChip) rightChip.textContent = `bid p.${docPage}`;
       if (rightMeta) rightMeta.textContent = "Enclosed CA Certificate · Certified Turnover Rows & Average";
@@ -1150,7 +1371,6 @@ class SatyaBidApp {
       if (rightText) rightText.innerHTML = `${highlightKeyFigures(caRows)}`;
 
     } else {
-      if (leftIcon) leftIcon.textContent = "📜";
       if (leftTitle) leftTitle.textContent = "TENDER CLAUSE";
       const clausePage = ev.clause_page || 1;
       if (leftChip) leftChip.textContent = `tender p.${clausePage}`;
@@ -1159,7 +1379,6 @@ class SatyaBidApp {
       const clauseRaw = ev.clause || this.getTenderClauseFallback(ruleId);
       if (leftText) leftText.innerHTML = `"${highlightKeyFigures(clauseRaw)}"`;
 
-      if (rightIcon) rightIcon.textContent = "📄";
       if (rightTitle) rightTitle.textContent = "BIDDER DOCUMENT";
       const docPage = ev.doc_page || 1;
       if (rightChip) rightChip.textContent = `bid p.${docPage}`;

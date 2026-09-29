@@ -26,8 +26,13 @@ steps. Regenerate only if you change the planted fraud scenarios — and then
 update the ground-truth table in `ANTIGRAVITY.md §2` and the tests.
 
 ## Running the UI (Phase 1+)
-Documented by whoever builds Phase 1, in the root README's Quickstart.
-Requirement: fresh clone → install → one command → S1 in browser.
+Run the local web server (serves S1–S7 and local APIs with zero extra dependencies):
+```bash
+python mvp/serve.py
+```
+Open `http://localhost:8000` in the browser.
+
+Note: The early Streamlit prototype has been retired and renamed to `mvp/streamlit_legacy.py`. Do not iterate on it. See `docs/FALLBACK.md` for full fallback runbook.
 
 ## Git workflow
 - `main` always runs: diagnose 8/8 PASS + tests PASS.
