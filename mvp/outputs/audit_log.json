@@ -1,7 +1,7 @@
 [
   {
     "seq": 1,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "pipeline_started",
     "payload": {
       "tender": "tender.pdf",
@@ -15,11 +15,11 @@
     },
     "payload_hash": "5654124a569688a97ddf40e352d5ce42b09fe95609c66669687b48f296d44c62",
     "prev_hash": "GENESIS",
-    "entry_hash": "b6f49329f9f99fec7aedefbe6f5e4c605044d71443c350062ea5aa96e39170a1"
+    "entry_hash": "5330a9bc7b93944554e97f3ad8cc8971d9a68aa34d684824b6439e4c9c8e045b"
   },
   {
     "seq": 2,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "tender_blueprinted",
     "payload": {
       "requirements": [
@@ -34,23 +34,23 @@
       ]
     },
     "payload_hash": "e03a81271db5e28405d8f4c53b9c9df7c1da1c426ca31666b52e3704b9be0d3d",
-    "prev_hash": "b6f49329f9f99fec7aedefbe6f5e4c605044d71443c350062ea5aa96e39170a1",
-    "entry_hash": "ffd7a67205112f44f871bff5bc04a7f0b4e5d1965c93ed7ac721d0c41aab9f8c"
+    "prev_hash": "5330a9bc7b93944554e97f3ad8cc8971d9a68aa34d684824b6439e4c9c8e045b",
+    "entry_hash": "168f15e4b1ce77f648db461ec9c5d8aea05bec06c3caac7d2d95d0eebd964866"
   },
   {
     "seq": 3,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "tender_sealed",
     "payload": {
       "sha256": "e41183b32cc6ea57c92d0938a4435fd130708b0a0eaca182ad0c46bcab495ac3"
     },
     "payload_hash": "fecd50daaab66d07506693dee2a6380af674f4c5b9faa77a03dc9c7efe397145",
-    "prev_hash": "ffd7a67205112f44f871bff5bc04a7f0b4e5d1965c93ed7ac721d0c41aab9f8c",
-    "entry_hash": "7a783b6ff5c92687cc599de6703cce1d3e9b160bc1feacc069652747932e0f59"
+    "prev_hash": "168f15e4b1ce77f648db461ec9c5d8aea05bec06c3caac7d2d95d0eebd964866",
+    "entry_hash": "2bf70f3aad09493ea76a74c558c13bbd22b741dfcae0b9aa097fda6113ebbd47"
   },
   {
     "seq": 4,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "corrigendum_checked",
     "payload": {
       "file": "tender_corrigendum.pdf",
@@ -60,12 +60,12 @@
       ]
     },
     "payload_hash": "5845b0bea564e22d817e9dc8a5687c304dbaeda536b7cb235c9533cae7eed8bc",
-    "prev_hash": "7a783b6ff5c92687cc599de6703cce1d3e9b160bc1feacc069652747932e0f59",
-    "entry_hash": "c5591252aee9bc31a7c24bd83743631ac393d8f462b4fd2409ed51c837169cd4"
+    "prev_hash": "2bf70f3aad09493ea76a74c558c13bbd22b741dfcae0b9aa097fda6113ebbd47",
+    "entry_hash": "395a1006aa63162fb3eee7c3f17eb92665de59a8a315007694e7a74cbf76c34c"
   },
   {
     "seq": 5,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "bidder_ingested",
     "payload": {
       "bidder": "A",
@@ -73,12 +73,12 @@
       "doc_author": "Apex-Office-PC"
     },
     "payload_hash": "98d3b2987aa3115fb028deeee337ac9c62cae6924d6e9a005421353c15a9d3d7",
-    "prev_hash": "c5591252aee9bc31a7c24bd83743631ac393d8f462b4fd2409ed51c837169cd4",
-    "entry_hash": "34bfd66ee6ac98b5a5071d2c2a4d94b15b6caf1fecdc8964b4bcfb6d7783d599"
+    "prev_hash": "395a1006aa63162fb3eee7c3f17eb92665de59a8a315007694e7a74cbf76c34c",
+    "entry_hash": "6ac34cb4fb4f24f491a8b5cb58633ef0565dd11fb315837d14a933bc736c149d"
   },
   {
     "seq": 6,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "bidder_ingested",
     "payload": {
       "bidder": "B",
@@ -86,12 +86,12 @@
       "doc_author": "Brightline-Laptop"
     },
     "payload_hash": "dd2a33d9edb7e5bf0122eee52d3d1003fc2d07a5c9393c65fccfb799a4c6be5c",
-    "prev_hash": "34bfd66ee6ac98b5a5071d2c2a4d94b15b6caf1fecdc8964b4bcfb6d7783d599",
-    "entry_hash": "1eedaf1d99b03c9e97185b1b4796a3abeb59805b9dda9ac14faf9bed1b9b04ff"
+    "prev_hash": "6ac34cb4fb4f24f491a8b5cb58633ef0565dd11fb315837d14a933bc736c149d",
+    "entry_hash": "aaddd126d8050ad793a3308147f013a7174f5ab57ae39332e973f324abef47d7"
   },
   {
     "seq": 7,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "bidder_ingested",
     "payload": {
       "bidder": "C",
@@ -99,12 +99,12 @@
       "doc_author": "Crestline-PC-03"
     },
     "payload_hash": "ab99fc83233ea292029ea47c95af022d0db55e5f23ebf13ac29f39858f7d205f",
-    "prev_hash": "1eedaf1d99b03c9e97185b1b4796a3abeb59805b9dda9ac14faf9bed1b9b04ff",
-    "entry_hash": "73419c47a47cf54dfb62e0fd2f6e918428c0f4a6cd8cdf8e774290073e5de6fe"
+    "prev_hash": "aaddd126d8050ad793a3308147f013a7174f5ab57ae39332e973f324abef47d7",
+    "entry_hash": "2c7aa315cdc42337a35ce59082fc71a3c060656a822ff279d06c0b16bf14c6e4"
   },
   {
     "seq": 8,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "bidder_ingested",
     "payload": {
       "bidder": "D",
@@ -112,12 +112,12 @@
       "doc_author": "Crestline-PC-03"
     },
     "payload_hash": "cd720351785540e2396b51d64ea0857942501f721e2b96c9b53f8055f4deaf4e",
-    "prev_hash": "73419c47a47cf54dfb62e0fd2f6e918428c0f4a6cd8cdf8e774290073e5de6fe",
-    "entry_hash": "61432a14e30c28a57bd85e039dffb3889996f483da834267a5993ecef11d5c28"
+    "prev_hash": "2c7aa315cdc42337a35ce59082fc71a3c060656a822ff279d06c0b16bf14c6e4",
+    "entry_hash": "fd677066228ad4a18ebb0205b975d8fd5bd6b014b6ada039e24befc1b3ccd926"
   },
   {
     "seq": 9,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "bidder_ingested",
     "payload": {
       "bidder": "E",
@@ -125,24 +125,24 @@
       "doc_author": "Everest-PC-01"
     },
     "payload_hash": "02bf3c8701b1b94f4a68943484e9c05674fd513678f378f00cd80c307c9ad50a",
-    "prev_hash": "61432a14e30c28a57bd85e039dffb3889996f483da834267a5993ecef11d5c28",
-    "entry_hash": "199875ec68faf55fe7b6d9834f75532d513ec0bf1a1831c42bf27a794310d363"
+    "prev_hash": "fd677066228ad4a18ebb0205b975d8fd5bd6b014b6ada039e24befc1b3ccd926",
+    "entry_hash": "a3c509325de4950f6cb84999414bcde5ed519114c770793450fc5c10779a4f19"
   },
   {
     "seq": 10,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "doc_forensics",
     "payload": {
       "findings": 12,
       "shared_markers": 9
     },
     "payload_hash": "1712fd8b7bb0add0e6ebb3fab190764315feb87cb3d8ae8f17411265ae1707d4",
-    "prev_hash": "199875ec68faf55fe7b6d9834f75532d513ec0bf1a1831c42bf27a794310d363",
-    "entry_hash": "ba2e28e3fdee5f1ad66da0ba0c0b04dbf487fa08c81a6d6638cc121e3f24c281"
+    "prev_hash": "a3c509325de4950f6cb84999414bcde5ed519114c770793450fc5c10779a4f19",
+    "entry_hash": "279e2056130ea7904002e31349a6e87b01d6e826a382505cb0f6dbb297edb69c"
   },
   {
     "seq": 11,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "ml_forensics",
     "payload": {
       "paraphrase_findings": 1,
@@ -150,12 +150,12 @@
       "pairs_flagged": 1
     },
     "payload_hash": "12fcdc059631c5f5b90c2da6315aada07e0a3dbe2ed0f447b68430a9e0985547",
-    "prev_hash": "ba2e28e3fdee5f1ad66da0ba0c0b04dbf487fa08c81a6d6638cc121e3f24c281",
-    "entry_hash": "344c55b157ccbc9b043ddc4414fa748dba29a5cdbed6a62d41339443a11a441f"
+    "prev_hash": "279e2056130ea7904002e31349a6e87b01d6e826a382505cb0f6dbb297edb69c",
+    "entry_hash": "05a1055eb6b82f707a6dbabdc7284ffdf5319fcfa228a2ff07c375cdf5ef65b7"
   },
   {
     "seq": 12,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "collusion_analysis",
     "payload": {
       "edges": [
@@ -184,12 +184,12 @@
       ]
     },
     "payload_hash": "2775d44ddbb563cd029a1171873137f87df068134efb149f59bd1ff23d26b771",
-    "prev_hash": "344c55b157ccbc9b043ddc4414fa748dba29a5cdbed6a62d41339443a11a441f",
-    "entry_hash": "eac1137e426526cf71dcd8332f8dbbaaed11ebefb50931729a30b5506fdf2868"
+    "prev_hash": "05a1055eb6b82f707a6dbabdc7284ffdf5319fcfa228a2ff07c375cdf5ef65b7",
+    "entry_hash": "8c65c9569f033957c78db68d6831a6ef0b6f2c20664833d01c5d15754d0d47b8"
   },
   {
     "seq": 13,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "price_forensics",
     "payload": {
       "cv": 0.0258,
@@ -205,12 +205,12 @@
       ]
     },
     "payload_hash": "24c9e6f77cba2dfa66d9ee92bc647e5b9b04c891df052ff6dc7f6b3cc3a8eaca",
-    "prev_hash": "eac1137e426526cf71dcd8332f8dbbaaed11ebefb50931729a30b5506fdf2868",
-    "entry_hash": "d96e02dd2cfec074b76e76a42ece8345fe83e82a3e0276bd7f589dec7b2dfe00"
+    "prev_hash": "8c65c9569f033957c78db68d6831a6ef0b6f2c20664833d01c5d15754d0d47b8",
+    "entry_hash": "b28c8fd6608681fbbc58972edaaea1d7ee28ff4eabdf457b40812cf5016437d1"
   },
   {
     "seq": 14,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "twocover_scan",
     "payload": {
       "bidders_with_hints": [
@@ -218,12 +218,12 @@
       ]
     },
     "payload_hash": "02b113510cd2d710b56e6d7a4ba7c5b2022b25ee528357404f43e964ae857b8d",
-    "prev_hash": "d96e02dd2cfec074b76e76a42ece8345fe83e82a3e0276bd7f589dec7b2dfe00",
-    "entry_hash": "a54d73d33cff14588940aad960d9bd2e4d51a75f0aabd9149270f77196d66c05"
+    "prev_hash": "b28c8fd6608681fbbc58972edaaea1d7ee28ff4eabdf457b40812cf5016437d1",
+    "entry_hash": "1a2ce44179ff2d1a556d8ffdff14b5db08db19997d913b059615b12ff9ecd01f"
   },
   {
     "seq": 15,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "verdict_issued",
     "payload": {
       "bidder": "A",
@@ -232,12 +232,12 @@
       "collusion_risk": "NONE"
     },
     "payload_hash": "fba6dabe32914f8c4b1bfff249689850cfa0473ac19967fbe4333a841bd4bebc",
-    "prev_hash": "a54d73d33cff14588940aad960d9bd2e4d51a75f0aabd9149270f77196d66c05",
-    "entry_hash": "05ee2a187dc36e1d138b2249f8b36120a836a336e0673707d64dfd55a453f80b"
+    "prev_hash": "1a2ce44179ff2d1a556d8ffdff14b5db08db19997d913b059615b12ff9ecd01f",
+    "entry_hash": "21975ba1960dd6a73da1f7da22da817e089b7061a32a0bfd0e94e3d478079faa"
   },
   {
     "seq": 16,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "verdict_issued",
     "payload": {
       "bidder": "B",
@@ -246,12 +246,12 @@
       "collusion_risk": "LOW"
     },
     "payload_hash": "c288c2886f7fced31b87074997c869645553b0a6d4b1a47ad84ee1c9b47071ea",
-    "prev_hash": "05ee2a187dc36e1d138b2249f8b36120a836a336e0673707d64dfd55a453f80b",
-    "entry_hash": "917b633ea8b0300bf1ed65146d60c331a01c2347b1660e823406d4de7d3f2574"
+    "prev_hash": "21975ba1960dd6a73da1f7da22da817e089b7061a32a0bfd0e94e3d478079faa",
+    "entry_hash": "aed3cb16e081ca4aa42a549ada413ac0c38b1aac0f36cae15af05f11d29d2d8f"
   },
   {
     "seq": 17,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "verdict_issued",
     "payload": {
       "bidder": "C",
@@ -260,12 +260,12 @@
       "collusion_risk": "HIGH"
     },
     "payload_hash": "6739165b40d9b4c54807f280abbbce93999dd0120c63b46c7c53d171d20d3d71",
-    "prev_hash": "917b633ea8b0300bf1ed65146d60c331a01c2347b1660e823406d4de7d3f2574",
-    "entry_hash": "4c9f8b5930c0b4061a73e475fdb4a20a403f1094ccf562f2caaca91430daa8bb"
+    "prev_hash": "aed3cb16e081ca4aa42a549ada413ac0c38b1aac0f36cae15af05f11d29d2d8f",
+    "entry_hash": "3ae11eb81588116a7a90a5b79fc076dc55714df2c0eb5579b8486e9a72e1157c"
   },
   {
     "seq": 18,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "verdict_issued",
     "payload": {
       "bidder": "D",
@@ -274,12 +274,12 @@
       "collusion_risk": "HIGH"
     },
     "payload_hash": "6d954371956ba5e35c19c7650268f552156d8c0b3baf8b5c617cbe5ab4edad40",
-    "prev_hash": "4c9f8b5930c0b4061a73e475fdb4a20a403f1094ccf562f2caaca91430daa8bb",
-    "entry_hash": "9689be07813c2b271b78ffded674d1b62557831576d1093ba9c0b5656d7f2ee3"
+    "prev_hash": "3ae11eb81588116a7a90a5b79fc076dc55714df2c0eb5579b8486e9a72e1157c",
+    "entry_hash": "91004c597007d89154c615e623f9a846dca6248100533bfae73e6ce3450f5eeb"
   },
   {
     "seq": 19,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "verdict_issued",
     "payload": {
       "bidder": "E",
@@ -288,19 +288,19 @@
       "collusion_risk": "LOW"
     },
     "payload_hash": "5899a052aefd4956c303ba269dbee88db6c359df8b0a069a816f5cd8cbaf6bee",
-    "prev_hash": "9689be07813c2b271b78ffded674d1b62557831576d1093ba9c0b5656d7f2ee3",
-    "entry_hash": "0368bbde821e90f2bcc578eac5062fa3bafd6313d958b0e737666b8ef6b34c3e"
+    "prev_hash": "91004c597007d89154c615e623f9a846dca6248100533bfae73e6ce3450f5eeb",
+    "entry_hash": "a8c8e1d958c4f9b9a25f574804f36d54122c6403d4559933eae6e29a4e385fac"
   },
   {
     "seq": 20,
-    "timestamp": "2026-10-01T15:51:35+00:00",
+    "timestamp": "2026-10-01T16:18:00+00:00",
     "event": "l1_determined",
     "payload": {
       "l1": "A",
       "price": 43200000.0
     },
     "payload_hash": "b59030869f83a35aaf4a8f797dbb8881e0646c7a6a30e08301cdc97d882ba890",
-    "prev_hash": "0368bbde821e90f2bcc578eac5062fa3bafd6313d958b0e737666b8ef6b34c3e",
-    "entry_hash": "82edcf7893b23337b3046fbf71870568f7875bd03abe3f235689f3613a5dcca6"
+    "prev_hash": "a8c8e1d958c4f9b9a25f574804f36d54122c6403d4559933eae6e29a4e385fac",
+    "entry_hash": "48dda2dd6778a2c6c245830146973b076dde9b7aa933d1edf79bd91997709c7e"
   }
 ]

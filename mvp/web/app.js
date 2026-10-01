@@ -95,6 +95,25 @@ function highlightKeyFigures(text) {
     .replace(/(GFR\s+Rule\s+144\(xi\))/gi, '<mark class="hl">$1</mark>');
 }
 
+function formatSpeakingOrder(text) {
+  if (!text) return '';
+  const lines = text.split('\n');
+  const formattedLines = lines.map(line => {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('*')) {
+      const colonIdx = trimmed.indexOf(':');
+      if (colonIdx > -1) {
+        const title = trimmed.substring(0, colonIdx);
+        const rest = trimmed.substring(colonIdx + 1);
+        return `<div class="speaking-order-bullet"><strong>${title}:</strong> ${highlightKeyFigures(rest)}</div>`;
+      }
+      return `<div class="speaking-order-bullet">${highlightKeyFigures(trimmed)}</div>`;
+    }
+    return `<div class="speaking-order-lead">${highlightKeyFigures(trimmed)}</div>`;
+  });
+  return formattedLines.join('');
+}
+
 const RULES_LIST = [
   { id: "R1", name: "R1 · Minimum average annual turnover", short: "R1 Turnover floor" },
   { id: "R2", name: "R2 · Turnover claim vs CA certificate consistency", short: "R2 Claim vs Cert" },
@@ -1429,10 +1448,6 @@ class SatyaBidApp {
         }) || {};
         const signals = cdEdge.signals || [];
 
-        // Fix 1: Sourced directly from signal payload
-        const dirSignal = signals.find(s => s.type === 'shared_directors');
-        const dirDetail = dirSignal ? dirSignal.detail : 'Common directors/partners: Anita Desai, Vikram Shah';
-
         const rows = signals.map(s => `
           <div class="signal-row-item">
             <div class="signal-item-text">
@@ -1460,9 +1475,9 @@ class SatyaBidApp {
         }) || {};
         const signals = beEdge.signals || [];
 
-        // Fix 2: Sourced directly from price_proximity signal payload
+        // Sourced directly from price_proximity signal payload
         const priceSig = signals.find(s => s.type === 'price_proximity');
-        const priceDetail = priceSig ? priceSig.detail : 'Quoted prices within 1.30% (Rs. 45,500,000 vs Rs. 46,100,000) — possible cover bidding';
+        const priceDetail = priceSig ? priceSig.detail : 'Price-proximity signal unavailable from engine';
 
         let extraE = '';
         if (bId === 'E') {
@@ -1479,13 +1494,13 @@ class SatyaBidApp {
         signalsHTML = `
           <div class="signals-list-wrap">
             <div style="font-size: 13px; font-weight: 700; color: var(--navy-900); margin-bottom: 4px;">
-              Cross-Bidder Relationship (B ↔ E) · Score: ${beEdge.score || 0.70} (LOW Risk)
+              Cross-Bidder Relationship (B ↔ E) · Score: ${beEdge.score !== undefined ? Number(beEdge.score).toFixed(2) : '—'} (LOW Risk)
             </div>
             <div class="signal-row-item">
               <div class="signal-item-text">
                 <strong>price_proximity</strong>: ${priceDetail}
               </div>
-              <div class="signal-item-weight low-weight">+${Number(priceSig ? priceSig.weight : 0.7).toFixed(2)}</div>
+              <div class="signal-item-weight low-weight">${priceSig && priceSig.weight !== undefined ? `+${Number(priceSig.weight).toFixed(2)}` : '—'}</div>
             </div>
             ${extraE}
             <div class="signals-action-wrap">
@@ -2380,11 +2395,12 @@ class SatyaBidApp {
       const p = e.payload || {};
 
       if (e.event === 'pipeline_started') {
-        const bidsCount = (p.bids || []).length || 5;
-        detailsSummary = `Scrutiny pipeline initiated for tender <code>${p.tender || 'tender.pdf'}</code> with ${bidsCount} bids (Bidders A, B, C, D, E)`;
+        const bidsCount = (p.bids || []).length;
+        const countDesc = bidsCount > 0 ? `${bidsCount} bids` : 'all bids';
+        detailsSummary = `Scrutiny pipeline initiated for tender <code>${p.tender || 'tender.pdf'}</code> with ${countDesc} (Bidders A, B, C, D, E)`;
       } else if (e.event === 'tender_blueprinted') {
         const reqs = p.requirements || [];
-        detailsSummary = `8 compliance requirements extracted (${reqs.slice(0, 4).join(', ')}, …)`;
+        detailsSummary = `${reqs.length} compliance requirements extracted (${reqs.slice(0, 4).join(', ')}, …)`;
       } else if (e.event === 'tender_sealed') {
         const sha = p.sha256 || '';
         detailsSummary = `Tender specification cryptographic hash recorded: <code>${sha.substring(0, 16)}…</code>`;
@@ -2395,9 +2411,9 @@ class SatyaBidApp {
       } else if (e.event === 'bidder_ingested') {
         detailsSummary = `Bidder ${p.bidder} (${p.name || ''}) ingested · Doc author metadata: <code>${p.doc_author || 'n/a'}</code>`;
       } else if (e.event === 'doc_forensics') {
-        detailsSummary = `Document metadata forensics: ${p.findings || 12} findings, ${p.shared_markers || 9} shared cross-bidder markers detected`;
+        detailsSummary = `Document metadata forensics: ${p.findings !== undefined ? p.findings : '—'} findings, ${p.shared_markers !== undefined ? p.shared_markers : '—'} shared cross-bidder markers detected`;
       } else if (e.event === 'ml_forensics') {
-        detailsSummary = `ML NLP forensics: ${p.paraphrase_findings || 1} cross-bidder paraphrase finding detected (${p.pairs_flagged || 1} pair flagged: C ↔ D)`;
+        detailsSummary = `ML NLP forensics: ${p.paraphrase_findings !== undefined ? p.paraphrase_findings : '—'} cross-bidder paraphrase finding detected (${p.pairs_flagged !== undefined ? p.pairs_flagged : '—'} pair flagged: C ↔ D)`;
       } else if (e.event === 'collusion_analysis') {
         const ringsStr = (p.rings || []).map(r => r.join('+')).join(', ') || 'none';
         detailsSummary = `${(p.edges || []).length} cross-bidder edge(s) evaluated · High-risk cartel ring(s): <strong>${ringsStr}</strong>`;
