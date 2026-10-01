@@ -5,3 +5,4 @@ networkx>=3.0
 reportlab>=4.0
 matplotlib>=3.6
 streamlit>=1.32
+scikit-learn>=1.3
