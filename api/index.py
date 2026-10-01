@@ -104,7 +104,7 @@ def execute_pipeline(stage_callback=None):
         raise HTTPException(status_code=404, detail="Dataset missing under mvp/data")
 
     ledger = AuditLedger()
-    result = run_mvp.run(tender, bids, ledger=ledger, stage_callback=stage_callback)
+    result = run_mvp.run(tender, bids, ledger=ledger)
     result.pop("ledger", None)
     audit_list = ledger.to_list()
     result["ledger_count"] = len(audit_list)
