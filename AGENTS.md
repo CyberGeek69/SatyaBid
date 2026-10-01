@@ -5,11 +5,11 @@
 docs/UI_UX_SPEC.md → docs/ARCHITECTURE.md → docs/ROADMAP.md.
 
 ## Before writing code
-Run `cd mvp && python diagnose.py`. 8/8 PASS required. If red, fix engine
+Run `cd mvp && python diagnose.py`. 13/13 PASS required. If red, fix engine
 first.
 
 ## Stable APIs (do not change without updating tests + docs)
-- Rule ids R1–R7, verdict vocabulary PASS/FAIL/REVIEW
+- Rule ids R1–R8 (R8 = PAN/GSTIN format validity), verdict vocabulary PASS/FAIL/REVIEW
 - Blueprint requirement ids (`turnover_min`, `emd`, `past_performance_min`,
   `local_content_min`, `requires_144xi`, `delivery_days`, `bid_number`,
   `estimated_value`)

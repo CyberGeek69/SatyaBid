@@ -3,12 +3,21 @@
 Planted ground truth (what the engine must catch):
   A Apex Computing Solutions  -> CLEAN (PASS, L1)
   B Brightline Technologies   -> turnover fraud: claims 2.4 Cr, CA cert shows 1.1 Cr avg;
-                                 invalid CA membership no. "FCA-0987X4" (FAIL)
-  C Crestline Systems         -> shares 2 directors + phone with D; price within 0.7% of D
-                                 (cover-bidding signal); same PDF author metadata as D (REVIEW)
+                                 invalid CA membership no. "FCA-0987X4";
+                                 malformed PAN "B1KPB5678Q" (FAIL)
+  C Crestline Systems         -> shares 2 directors + phone + address + bank account +
+                                 submission IP + DSC token with D; price within 0.7% of D
+                                 (cover-bidding signal); same PDF author metadata as D;
+                                 identical draft sentence with typos shared with D (REVIEW)
   D Deltaforce IT Services    -> collusion with C + MISSING GFR 144(xi) declaration (FAIL)
   E Everest Digital           -> claims Class-I but declares 28% local content (Class-II);
-                                 past performance 40L < 75L requirement (FAIL)
+                                 past performance 40L < 75L requirement;
+                                 price hint hidden in the technical bid (FAIL)
+
+Tender-level planted patterns:
+  - tender_corrigendum.pdf relaxes turnover 1.5 Cr -> 1.0 Cr and EMD 2 L -> 1 L
+    after publication (mid-tender tailoring demo)
+  - the 5 bid prices form an abnormally tight cluster (CV screen demo)
 """
 import os
 from reportlab.lib.pagesizes import A4
@@ -116,6 +125,9 @@ BIDDERS = {
               directors=[("Rajesh Menon", "Managing Partner"),
                          ("Priya Nair", "Partner")],
               phone="98470-11223", address="14, Guindy Industrial Estate, Chennai 600032",
+              pan="AAKCA1234F", gstin="33AAKCA1234F1Z5",
+              email="bids@apexcomputing.in", bank="50200011223344",
+              ip="49.205.113.7", dsc="eMudhra Token #EM-10293 (Rajesh Menon)",
               turnover_claim="Rs. 2,80,00,000/-", turnover_rows=[
                   ("FY 2024-25", "2,60,00,000"), ("FY 2023-24", "2,90,00,000"),
                   ("FY 2022-23", "3,00,00,000")],
@@ -129,6 +141,9 @@ BIDDERS = {
     "B": dict(name="Brightline Technologies", city="Bengaluru",
               directors=[("Suresh Iyer", "Proprietor")],
               phone="98111-22334", address="22, HSR Layout Sector 2, Bengaluru 560102",
+              pan="B1KPB5678Q", gstin="29BBKPB5678Q1Z2",
+              email="brightline.tech@gmail.com", bank="50200099887700",
+              ip="157.34.210.9", dsc="eMudhra Token #EM-44501 (Suresh Iyer)",
               turnover_claim="Rs. 2,40,00,000/-", turnover_rows=[
                   ("FY 2024-25", "1,00,00,000"), ("FY 2023-24", "1,20,00,000"),
                   ("FY 2022-23", "1,10,00,000")],
@@ -142,6 +157,9 @@ BIDDERS = {
               directors=[("Vikram Shah", "Director"), ("Anita Desai", "Director"),
                          ("Rohan Kulkarni", "Director")],
               phone="98200-44556", address="8, Andheri MIDC, Mumbai 400093",
+              pan="AAKCC8899R", gstin="27AAKCC8899R1Z3",
+              email="tenders@crestlinesys.com", bank="50200099887711",
+              ip="103.21.44.18", dsc="eMudhra Token #EM-88412 (Vikram Shah)",
               turnover_claim="Rs. 2,10,00,000/-", turnover_rows=[
                   ("FY 2024-25", "2,00,00,000"), ("FY 2023-24", "2,10,00,000"),
                   ("FY 2022-23", "2,20,00,000")],
@@ -150,11 +168,22 @@ BIDDERS = {
               has_144xi=True, past_perf="Rs. 90,00,000/-",
               past_rows=[("PO/2023/512", "ONGC", "Rs. 90,00,000/-")],
               price=44100000, emd="Enclosed: DD No. 550981 dated 11-09-2026",
-              author="Crestline-PC-03"),
+              author="Crestline-PC-03",
+              extra_para="We have carefully perused the tender document and "
+                         "unconditionally accept all terms and conditions "
+                         "stipulated theirin without any devation whatsoever.",
+              # ML ground truth: same draft, paraphrased — exact sentence
+              # matching misses this; TF-IDF paraphrase screen must catch it.
+              extra_para2="Our organisation possesses adequate technical "
+                         "manpower and infrastructure to complete the entire "
+                         "supply within the stipulated delivery period."),
     "D": dict(name="Deltaforce IT Services", city="Mumbai",
               directors=[("Vikram Shah", "Director"), ("Anita Desai", "Director"),
                          ("Farhan Sheikh", "Director")],
               phone="98200-44556", address="8, Andheri MIDC, Mumbai 400093",
+              pan="AAKCD9900S", gstin="27AAKCD9900S1Z4",
+              email="info@deltaforceit.in", bank="50200099887711",
+              ip="103.21.44.18", dsc="eMudhra Token #EM-88412 (Vikram Shah)",
               turnover_claim="Rs. 1,90,00,000/-", turnover_rows=[
                   ("FY 2024-25", "1,80,00,000"), ("FY 2023-24", "1,90,00,000"),
                   ("FY 2022-23", "2,00,00,000")],
@@ -163,10 +192,20 @@ BIDDERS = {
               has_144xi=False, past_perf="Rs. 78,00,000/-",
               past_rows=[("PO/2024/118", "BPCL", "Rs. 78,00,000/-")],
               price=44400000, emd="Enclosed: DD No. 550982 dated 11-09-2026",
-              author="Crestline-PC-03"),
+              author="Crestline-PC-03",
+              extra_para="We have carefully perused the tender document and "
+                         "unconditionally accept all terms and conditions "
+                         "stipulated theirin without any devation whatsoever.",
+              # ML ground truth: same draft as C, paraphrased.
+              extra_para2="Our company has adequate technical manpower and "
+                         "infrastructure to execute the entire supply within "
+                         "the stipulated delivery schedule."),
     "E": dict(name="Everest Digital", city="Pune",
               directors=[("Kavita Rao", "Partner"), ("Deepak Joshi", "Partner")],
               phone="98333-77889", address="5, Hinjewadi Phase 1, Pune 411057",
+              pan="AAKCE3344T", gstin="27AAKCE3344T1Z6",
+              email="everest.digital@yahoo.in", bank="50200055443322",
+              ip="103.88.71.203", dsc="Capricorn Token #CP-20981 (Kavita Rao)",
               turnover_claim="Rs. 2,20,00,000/-", turnover_rows=[
                   ("FY 2024-25", "2,10,00,000"), ("FY 2023-24", "2,20,00,000"),
                   ("FY 2022-23", "2,30,00,000")],
@@ -175,7 +214,9 @@ BIDDERS = {
               has_144xi=True, past_perf="Rs. 40,00,000/-",
               past_rows=[("PO/2024/077", "NHAI", "Rs. 40,00,000/-")],
               price=46100000, emd="Enclosed: DD No. 309911 dated 09-09-2026",
-              author="Everest-PC-01"),
+              author="Everest-PC-01",
+              price_hint=" Our commercial offer works out to approximately "
+                         "Rs. 4,61,00,000/- for the complete scope of supply."),
 }
 
 
@@ -190,13 +231,22 @@ def make_bidder(key, b):
          P("<b>1. Covering letter.</b> We hereby submit our technical bid for the subject "
            "tender. Our average annual turnover for the last three financial years is "
            f"<b>{b['turnover_claim']}</b>, as certified by our Chartered Accountant. "
-           f"We enclose Earnest Money Deposit. {b['emd']}.", BODY),
+           f"We enclose Earnest Money Deposit. {b['emd']}.{b.get('price_hint', '')}",
+           BODY),
+         ] + ([P(b["extra_para"], BODY)] if b.get("extra_para") else []) \
+           + ([P(b["extra_para2"], BODY)] if b.get("extra_para2") else []) + [
          P("<b>2. Bidder particulars.</b>", H2),
          styled_table(
              [[Paragraph("<b>Field</b>", HDRC), Paragraph("<b>Details</b>", HDRC)],
               [P("Legal name", CELL), P(b["name"], CELL)],
               [P("Registered address", CELL), P(b["address"], CELL)],
               [P("Contact phone", CELL), P(b["phone"], CELL)],
+              [P("PAN", CELL), P(b["pan"], CELL)],
+              [P("GSTIN", CELL), P(b["gstin"], CELL)],
+              [P("Email", CELL), P(b["email"], CELL)],
+              [P("Bank A/c", CELL), P(b["bank"], CELL)],
+              [P("Submission IP", CELL), P(b["ip"], CELL)],
+              [P("DSC token", CELL), P(b["dsc"], CELL)],
               [P("Directors / Partners", CELL),
                P("<br/>".join(f"{n} ({r})" for n, r in b["directors"]), CELL)]],
              [55 * mm, 115 * mm]),
@@ -245,8 +295,37 @@ def make_bidder(key, b):
     print(f"bidder_{key} written")
 
 
+# ------------------------------------------------------- corrigendum ---
+def make_corrigendum():
+    """A post-publication amendment that RELAXES eligibility — the classic
+    mid-tender tailoring pattern the tender-integrity module must catch."""
+    d = doc(os.path.join(BASE, "tender_corrigendum.pdf"),
+            author="GeM Portal (synthetic)")
+    s = [Paragraph("GOVERNMENT E-MARKETPLACE (GeM) — CORRIGENDUM 1", H1),
+         Paragraph("Bid Number: GEM/2026/B/6123457 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                   "Issued: 18-09-2026 (after bid submission opened)", SMALL),
+         HRFlowable(width="100%", thickness=1, color=colors.HexColor("#0f2a4a")),
+         Spacer(1, 6),
+         Paragraph("The following clauses of the bid document dated 01-09-2026 "
+                   "stand amended:", BODY),
+         Paragraph("2. <b>Earnest Money Deposit (EMD): Rs. 1,00,000/-.</b> "
+                   "Micro and Small Enterprises (MSEs) and DPIIT-recognised "
+                   "Startups holding a valid Udyam Registration Certificate "
+                   "are exempted from EMD submission.", BODY),
+         Paragraph("3. <b>Minimum average annual turnover</b> of the bidder for the last "
+                   "three financial years (FY 2022-23, 2023-24, 2024-25) shall be "
+                   "<b>Rs. 1,00,00,000/- (Rupees One Crore)</b>, duly certified "
+                   "by a practicing Chartered Accountant with valid ICAI membership number.",
+                   BODY),
+         Paragraph("All other terms and conditions of the original bid document "
+                   "remain unchanged.", BODY)]
+    d.build(s)
+    print("tender_corrigendum.pdf written")
+
+
 if __name__ == "__main__":
     make_tender()
+    make_corrigendum()
     for k, b in BIDDERS.items():
         make_bidder(k, b)
     print("dataset complete:", BASE)

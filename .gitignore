@@ -13,7 +13,7 @@ Thumbs.db
 .vscode/
 .idea/
 # Local outputs (regenerable)
-mvp/outputs/
+# mvp/outputs/
 
 .vercel
 .env*

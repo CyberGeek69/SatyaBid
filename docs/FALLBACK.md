@@ -12,7 +12,7 @@ This document defines execution tiers and disaster-recovery runbooks for demo-da
 | **Tier 2 (Local Web)** | Python Web Server | `python mvp/serve.py` | Local zero-dependency web server (`http://127.0.0.1:8000`) |
 | **Tier 3 (Headless CLI)** | Python MVP Engine | `python mvp/run_mvp.py --verify` | Direct terminal execution; generates `outputs/analysis.json` & verifies SHA-256 audit ledger |
 | **Tier 4 (Diagnostics)** | Backend Health Check | `cd mvp && python diagnose.py` | 8-stage deterministic verification suite |
-| **Tier 5 (Archival Prototype)** | Legacy Streamlit App | `streamlit run mvp/streamlit_legacy.py` | Retired Phase 0 prototype (preserved for reference only) |
+| **Tier 5 (Archival Prototype)** | Legacy Streamlit App | `streamlit run mvp/app.py` | Retired Phase 0 prototype (preserved for reference only) |
 
 ---
 
@@ -36,4 +36,4 @@ If web browser rendering fails:
 2. Inspect deterministic outcomes in `mvp/outputs/analysis.json` and cryptographic proof in `mvp/outputs/audit_log.json`.
 
 ### Scenario C: Legacy Reference
-`mvp/app.py` was renamed to `mvp/streamlit_legacy.py` to prevent confusion. It is an early throwaway prototype and is not part of the active Phase 1 release. Do not build or test features against it.
+`mvp/app.py` was renamed to `mvp/app.py` to prevent confusion. It is an early throwaway prototype and is not part of the active Phase 1 release. Do not build or test features against it.

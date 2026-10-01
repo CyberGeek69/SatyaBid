@@ -41,6 +41,13 @@ class BidderFacts:
     phone: str = ""
     address: str = ""
     has_emd: bool = False
+    # identity-clustering fields (phantom / single-controller detection)
+    pan: str = ""
+    gstin: str = ""
+    email: str = ""
+    bank_account: str = ""
+    ip_address: str = ""
+    dsc_operator: str = ""
     metadata: dict = field(default_factory=dict)
 
 
@@ -117,6 +124,26 @@ def parse_bidder(bidder_id, name, pages, metadata):
         f.address = m.group(1).strip()[:120]
 
     f.has_emd = bool(re.search(r"Earnest\s+Money\s+Deposit\.\s*\S", text))
+
+    # identity fields for phantom / single-controller bidder detection
+    m = re.search(r"\bPAN\s*:?\s*([A-Z0-9]{10})\b", text)
+    if m:
+        f.pan = m.group(1).strip()
+    m = re.search(r"\bGSTIN\s*:?\s*([0-9A-Z]{15})\b", text)
+    if m:
+        f.gstin = m.group(1).strip()
+    m = re.search(r"[\w.\-+%]+@[\w.\-]+\.[A-Za-z]{2,}", text)
+    if m:
+        f.email = m.group(0).strip().lower()
+    m = re.search(r"Bank\s*A/c\s*:?\s*(\d{6,})", text)
+    if m:
+        f.bank_account = m.group(1).strip()
+    m = re.search(r"\bIP\s*:?\s*(\d{1,3}(?:\.\d{1,3}){3})", text)
+    if m:
+        f.ip_address = m.group(1).strip()
+    m = re.search(r"DSC\s*(?:token)?\s*:?\s*([^\n]+)", text)
+    if m:
+        f.dsc_operator = m.group(1).strip()[:80]
 
     f._pages, f._pg = pages, pg
     return f
@@ -231,4 +258,35 @@ def run_checks(facts, blueprint):
          "rejection."),
         _ev(blueprint.get("emd"))[0], _ev(blueprint.get("emd"))[1],
         "EMD section of covering letter.", facts._pg("Earnest")))
+
+    # R8: bidder identity documents — PAN / GSTIN format validity.
+    # A malformed PAN/GSTIN is a forgery signal (cf. Bombay HC Nashik fake-CA
+    # case; MP EOW Sep-2026 fake-bidder case). Real registry verification
+    # (NSDL/GSTN) plugs in here when live APIs are available.
+    pan_ok = bool(re.match(r"^[A-Z]{5}[0-9]{4}[A-Z]$", facts.pan or ""))
+    gst_ok = bool(re.match(r"^\d{2}[A-Z]{5}[0-9]{4}[A-Z][A-Z0-9]Z[A-Z0-9]$",
+                           facts.gstin or ""))
+    if facts.pan and not pan_ok:
+        r8_status, r8_why = "FAIL", (
+            f"PAN '{facts.pan}' does not match the Income-Tax PAN pattern "
+            f"(5 letters + 4 digits + 1 letter) — the identity document is "
+            f"suspect.")
+    elif facts.gstin and not gst_ok:
+        r8_status, r8_why = "FAIL", (
+            f"GSTIN '{facts.gstin}' does not match the GSTN pattern — the "
+            f"identity document is suspect.")
+    elif not facts.pan:
+        r8_status, r8_why = "REVIEW", "No PAN found in the bid documents."
+    else:
+        r8_status, r8_why = "PASS", (
+            f"PAN '{facts.pan}' and GSTIN '{facts.gstin}' match the statutory "
+            f"formats (format-level check; live registry verification is a "
+            f"planned integration).")
+    R.append(CheckResult(
+        "R8 · Bidder identity documents (PAN/GSTIN)",
+        r8_status, r8_why,
+        "Tender requires valid bidder identity documents with the bid.",
+        blueprint.get("bid_number", {}).get("page"),
+        f"PAN: {facts.pan or '—'}; GSTIN: {facts.gstin or '—'}",
+        facts._pg("PAN")))
     return R

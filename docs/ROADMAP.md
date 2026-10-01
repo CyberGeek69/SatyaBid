@@ -9,7 +9,7 @@ diagnostic. Verified: `cd mvp && python diagnose.py` → 8/8 PASS.
 
 ## Phase 1 — Judge-facing UI (CURRENT TASK)
 Rebuild the UI exactly per `docs/UI_UX_SPEC.md`, wired to the existing
-engine. Old `mvp/streamlit_legacy.py` (Streamlit) is retired — do not iterate on it.
+engine. Old `mvp/app.py` (Streamlit) is retired — do not iterate on it.
 
 Order: S1 upload → S2 stepper → S3 dashboard → S4 dossier → S5 evidence →
 S6 graph → S7 audit → shared components extracted as you go.

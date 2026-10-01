@@ -44,7 +44,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 python serve.py
 
 # legacy prototype (archival)
-streamlit run streamlit_legacy.py
+streamlit run app.py
 ```
 
 ## Demo dataset ground truth

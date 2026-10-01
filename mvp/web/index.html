@@ -138,7 +138,7 @@
             </svg>
           </span>
           <span class="nav-label">Audit trail</span>
-          <span class="nav-badge" id="nav-badge-audit">14</span>
+          <span class="nav-badge" id="nav-badge-audit">20</span>
         </a>
       </nav>
 
@@ -154,18 +154,18 @@
     <!-- Main Content Area: S3 Dashboard, S4 Bidder Dossier, S5 Evidence Viewer, S6 Collusion Graph, S7 Audit Trail -->
     <main class="main-content" id="main-content">
       
-      <!-- ==================== S1: New Scrutiny (Landing) (§4 S1) ==================== -->
+      <!-- ==================== S1: New Scrutiny (Landing) ==================== -->
       <section class="screen-view s1-landing" id="screen-s1" style="display: none;">
         <div class="landing-header">
           <div class="landing-title-wrap">
             <span class="landing-badge">Tender Compliance & Cartel Detection</span>
             <h1 class="landing-title">New Bid Scrutiny</h1>
-            <p class="landing-subtitle">Upload digital tender documents for instant deterministic analysis, or execute the pre-loaded GeM benchmark dataset.</p>
+            <p class="landing-subtitle">Verify tender documents with PyMuPDF pre-flight checks, or execute deterministic scrutiny against the pre-loaded GeM evaluation benchmark.</p>
           </div>
         </div>
 
         <div class="landing-cards-grid">
-          <!-- Card 1: Upload Tender Package -->
+          <!-- Card 1: Pre-Flight Document Validator -->
           <div class="landing-card upload-card" id="card-upload-tender">
             <div class="landing-card-header">
               <div class="landing-card-icon-box">
@@ -178,9 +178,19 @@
                 </svg>
               </div>
               <div>
-                <h3 class="landing-card-title">Upload tender package</h3>
-                <span class="landing-card-subtitle">Digital tender RFP & bidder submission packets</span>
+                <h3 class="landing-card-title">Pre-Flight Document Validator</h3>
+                <span class="landing-card-subtitle">Validate digital tender RFP & bidder submission packets</span>
               </div>
+            </div>
+
+            <!-- Honest Benchmarking Notice -->
+            <div class="upload-disclosure-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; margin-top: 1px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span><strong>Pre-Flight Parsing:</strong> Uploaded PDF streams are parsed live via PyMuPDF (<code>POST /api/validate-document</code>) to verify GeM clause formatting and Cover-1 schedule readability. End-to-end multi-bidder cartel detection and audit sealing execute against the synchronized CPCL benchmark package (1 tender + 1 corrigendum + 5 bids).</span>
             </div>
 
             <div class="upload-sections-wrap">
@@ -195,8 +205,8 @@
                   <div class="file-chip primary-file" id="chip-tender-default">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">tender.pdf</span>
-                    <span class="file-chip-meta">2 pages</span>
-                    <span class="file-chip-status">✓ parsed</span>
+                    <span class="file-chip-meta">1 page</span>
+                    <span class="file-chip-status">✓ benchmark file</span>
                   </div>
                 </div>
                 <div class="upload-inline-error" id="error-tender" style="display: none;"></div>
@@ -214,31 +224,31 @@
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_A_Apex.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
-                    <span class="file-chip-status">✓ parsed</span>
+                    <span class="file-chip-status">✓ benchmark file</span>
                   </div>
                   <div class="file-chip" id="chip-bidder-B">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_B_Brightline.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
-                    <span class="file-chip-status">✓ parsed</span>
+                    <span class="file-chip-status">✓ benchmark file</span>
                   </div>
                   <div class="file-chip" id="chip-bidder-C">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_C_Crestline.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
-                    <span class="file-chip-status">✓ parsed</span>
+                    <span class="file-chip-status">✓ benchmark file</span>
                   </div>
                   <div class="file-chip" id="chip-bidder-D">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_D_Deltaforce.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
-                    <span class="file-chip-status">✓ parsed</span>
+                    <span class="file-chip-status">✓ benchmark file</span>
                   </div>
                   <div class="file-chip" id="chip-bidder-E">
                     <span class="file-chip-icon">📄</span>
                     <span class="file-chip-name">bidder_E_Everest.pdf</span>
                     <span class="file-chip-meta">2 pages</span>
-                    <span class="file-chip-status">✓ parsed</span>
+                    <span class="file-chip-status">✓ benchmark file</span>
                   </div>
                 </div>
                 <div class="upload-inline-error" id="error-bids" style="display: none;"></div>
@@ -247,16 +257,16 @@
 
             <div class="upload-card-footer">
               <button class="btn btn-primary btn-block" id="btn-start-scrutiny">
-                <span>Start scrutiny</span>
+                <span>Run Benchmark Scrutiny with Pre-Flight Checks</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
               </button>
-              <p class="format-hint">Supported: digital PDFs. Scanned pages route to OCR.</p>
+              <p class="format-hint">PyMuPDF verifies digital PDF formatting. Scanned documents require OCR.</p>
             </div>
           </div>
 
-          <!-- Card 2: Run Demo Dataset (Priority Judge Path) -->
+          <!-- Card 2: Run Evaluation Benchmark (Priority Path) -->
           <div class="landing-card demo-card" id="card-demo-dataset">
             <div class="demo-card-badge">RECOMMENDED FOR EVALUATION</div>
             <div class="landing-card-header">
@@ -266,36 +276,41 @@
                 </svg>
               </div>
               <div>
-                <h3 class="landing-card-title">Run demo dataset</h3>
-                <span class="landing-card-subtitle">CPCL Desktop Procurement benchmark</span>
+                <h3 class="landing-card-title">Run Evaluation Benchmark</h3>
+                <span class="landing-card-subtitle">CPCL Desktop Procurement benchmark (GEM/2026/B/6123457)</span>
               </div>
             </div>
 
             <div class="demo-card-body">
               <div class="demo-summary-box">
                 <div class="demo-bid-id">GEM/2026/B/6123457</div>
-                <div class="demo-bid-title">500 Desktop Computers · CPCL Chennai</div>
+                <div class="demo-bid-title">500 Desktop Computers — CPCL Chennai</div>
                 <div class="demo-meta-pills">
                   <span class="demo-tag">5 Bidders</span>
-                  <span class="demo-tag">7 GFR Rules</span>
+                  <span class="demo-tag">8 GFR Rules</span>
                   <span class="demo-tag alert">1 Seeded Cartel Ring</span>
+                  <span class="demo-tag alert">1 Technical Price Leak</span>
                 </div>
               </div>
               <p class="demo-description">
-                Pre-loaded official GeM procurement bid with 5 realistic vendor submissions containing intentional technical deficiencies and planted anti-competitive signals (shared directors, phone, address, and cover bidding).
+                Official GeM procurement benchmark with 5 realistic vendor submissions containing intentional technical deficiencies, corrigendum relaxation, and planted anti-competitive signals (shared directors, phone, address, and cover bidding).
               </p>
               <div class="demo-feature-list">
                 <div class="demo-feature-item">
                   <span class="feature-check">✓</span>
-                  <span>100% offline & deterministic evaluation</span>
+                  <span>100% offline & deterministic (Zero LLM hallucination)</span>
                 </div>
                 <div class="demo-feature-item">
                   <span class="feature-check">✓</span>
-                  <span>Two-cover isolation (only PASS bids ranked)</span>
+                  <span>Two-cover isolation (only PASS bids L1-eligible)</span>
                 </div>
                 <div class="demo-feature-item">
                   <span class="feature-check">✓</span>
                   <span>Live SHA-256 tamper-evident audit ledger</span>
+                </div>
+                <div class="demo-feature-item">
+                  <span class="feature-check">✓</span>
+                  <span>Full 13-stage diagnostic pipeline execution</span>
                 </div>
               </div>
             </div>
@@ -305,7 +320,7 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg>
-                <span>Run demo scrutiny</span>
+                <span>Run Complete Scrutiny (13 Diagnostic Stages)</span>
               </button>
               <p class="demo-footer-note">One click. Zero configuration required.</p>
             </div>
@@ -318,11 +333,11 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          <span>Registries (GSTN / Udyam / MCA / DPIIT) run as simulated checks in this build — labeled with <span class="badge-simulated">SIMULATED</span> wherever they appear.</span>
+          <span>External registries (GSTN / Udyam / MCA / DPIIT) execute as deterministic rule simulators in this build — labeled with <span class="badge-simulated">SIMULATED</span> wherever they appear.</span>
         </div>
       </section>
 
-      <!-- ==================== S2: Analysis Progress (Transient Stepper) (§4 S2) ==================== -->
+      <!-- ==================== S2: Analysis Progress (13-Stage Pipeline Stepper) ==================== -->
       <section class="screen-view s2-stepper" id="screen-s2" style="display: none;">
         <div class="stepper-takeover-card">
           <div class="stepper-header">
@@ -331,15 +346,18 @@
               <h2 class="stepper-title" id="stepper-heading">Scrutinising Tender & Bid Packets</h2>
               <p class="stepper-bid-context">Bid GEM/2026/B/6123457 · CPCL Desktop Procurement</p>
             </div>
-            <div class="stepper-live-badge">
-              <span class="live-dot-pulse"></span>
-              <span id="stepper-stage-status">Executing Pipeline…</span>
+            <div class="stepper-engine-badge" id="stepper-engine-badge">
+              <span class="engine-spinner" id="stepper-spinner"></span>
+              <span id="stepper-stage-status">Engine Ready</span>
             </div>
           </div>
 
-          <!-- Vertical Stepper (5 real stages per §4 S2) -->
+          <!-- Prominent failure alert banner (hidden by default) -->
+          <div id="stepper-failure-banner" class="stepper-failure-banner" style="display: none;"></div>
+
+          <!-- Vertical Stepper (13 real diagnostic stages 1:1 with diagnose.py) -->
           <div class="stepper-track" id="stepper-track">
-            <!-- Step 1 -->
+            <!-- Stage 1: imports -->
             <div class="stepper-step pending" id="step-1" data-stage="1">
               <div class="step-indicator">
                 <span class="step-num">1</span>
@@ -348,14 +366,14 @@
               </div>
               <div class="step-content">
                 <div class="step-title-row">
-                  <h4 class="step-title">Ingesting documents</h4>
+                  <h4 class="step-title">Environment & Core Dependencies</h4>
                   <span class="step-status-tag" id="step-status-1">Queued</span>
                 </div>
-                <p class="step-detail" id="step-detail-1">6 files, 11 pages parsed</p>
+                <p class="step-detail" id="step-detail-1">Python 3.10 · PyMuPDF, NetworkX, scikit-learn, ReportLab</p>
               </div>
             </div>
 
-            <!-- Step 2 -->
+            <!-- Stage 2: dataset present -->
             <div class="stepper-step pending" id="step-2" data-stage="2">
               <div class="step-indicator">
                 <span class="step-num">2</span>
@@ -364,14 +382,14 @@
               </div>
               <div class="step-content">
                 <div class="step-title-row">
-                  <h4 class="step-title">Blueprinting tender</h4>
+                  <h4 class="step-title">Evaluation Dataset Verification</h4>
                   <span class="step-status-tag" id="step-status-2">Queued</span>
                 </div>
-                <p class="step-detail" id="step-detail-2">8 requirements extracted</p>
+                <p class="step-detail" id="step-detail-2">CPCL Desktop Procurement: 1 tender + 1 corrigendum + 5 bids</p>
               </div>
             </div>
 
-            <!-- Step 3 -->
+            <!-- Stage 3: ingestion -->
             <div class="stepper-step pending" id="step-3" data-stage="3">
               <div class="step-indicator">
                 <span class="step-num">3</span>
@@ -380,14 +398,14 @@
               </div>
               <div class="step-content">
                 <div class="step-title-row">
-                  <h4 class="step-title">Running 7 compliance rules × 5 bidders</h4>
+                  <h4 class="step-title">Document Ingestion & Metadata Extraction</h4>
                   <span class="step-status-tag" id="step-status-3">Queued</span>
                 </div>
-                <p class="step-detail" id="step-detail-3">35 compliance checks evaluated</p>
+                <p class="step-detail" id="step-detail-3">1 tender page + 10 bid pages parsed; PDF author metadata</p>
               </div>
             </div>
 
-            <!-- Step 4 -->
+            <!-- Stage 4: blueprinting -->
             <div class="stepper-step pending" id="step-4" data-stage="4">
               <div class="step-indicator">
                 <span class="step-num">4</span>
@@ -396,14 +414,14 @@
               </div>
               <div class="step-content">
                 <div class="step-title-row">
-                  <h4 class="step-title">Mapping cross-bidder relationships</h4>
+                  <h4 class="step-title">Tender Specification Blueprinting</h4>
                   <span class="step-status-tag" id="step-status-4">Queued</span>
                 </div>
-                <p class="step-detail" id="step-detail-4">2 edges mapped · suspected ring: C + D</p>
+                <p class="step-detail" id="step-detail-4">8 RFP requirements extracted (turnover floor, EMD, local content)</p>
               </div>
             </div>
 
-            <!-- Step 5 -->
+            <!-- Stage 5: checks R1-R8 -->
             <div class="stepper-step pending" id="step-5" data-stage="5">
               <div class="step-indicator">
                 <span class="step-num">5</span>
@@ -412,23 +430,157 @@
               </div>
               <div class="step-content">
                 <div class="step-title-row">
-                  <h4 class="step-title">Issuing verdicts & sealing audit ledger</h4>
+                  <h4 class="step-title">Technical Compliance Evaluation (R1–R8)</h4>
                   <span class="step-status-tag" id="step-status-5">Queued</span>
                 </div>
-                <p class="step-detail" id="step-detail-5">14 entries committed to SHA-256 chain</p>
+                <p class="step-detail" id="step-detail-5">40 statutory compliance checks evaluated (8 rules × 5 bidders)</p>
+              </div>
+            </div>
+
+            <!-- Stage 6: collusion graph -->
+            <div class="stepper-step pending" id="step-6" data-stage="6">
+              <div class="step-indicator">
+                <span class="step-num">6</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Cross-Bidder Collusion Graph & Rings</h4>
+                  <span class="step-status-tag" id="step-status-6">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-6">2 edges mapped (B–E, C–D); 1 high-risk cartel ring: C–D</p>
+              </div>
+            </div>
+
+            <!-- Stage 7: price forensics -->
+            <div class="stepper-step pending" id="step-7" data-stage="7">
+              <div class="step-indicator">
+                <span class="step-num">7</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Statistical Price Forensics (CV & Clustering)</h4>
+                  <span class="step-status-tag" id="step-status-7">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-7">CV 2.58% flagged (<5% threshold); C–D 0.68% cluster detected</p>
+              </div>
+            </div>
+
+            <!-- Stage 8: document forensics -->
+            <div class="stepper-step pending" id="step-8" data-stage="8">
+              <div class="step-indicator">
+                <span class="step-num">8</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Shared-Draft & Document Forensics</h4>
+                  <span class="step-status-tag" id="step-status-8">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-8">12 findings on C–D: 2 shared boilerplate, 9 distinctive typos, 1 metadata match</p>
+              </div>
+            </div>
+
+            <!-- Stage 9: ml forensics -->
+            <div class="stepper-step pending" id="step-9" data-stage="9">
+              <div class="step-indicator">
+                <span class="step-num">9</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">ML Paraphrase & NLP Forensic Screen</h4>
+                  <span class="step-status-tag" id="step-status-9">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-9">1 paraphrase finding on C–D (TF-IDF cosine 0.62); fuzzy screen clean</p>
+              </div>
+            </div>
+
+            <!-- Stage 10: tender integrity -->
+            <div class="stepper-step pending" id="step-10" data-stage="10">
+              <div class="step-indicator">
+                <span class="step-num">10</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Tender Integrity & Corrigendum Tracking</h4>
+                  <span class="step-status-tag" id="step-status-10">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-10">Tender sealed; Corrigendum caught: 2 relaxed requirements (Turnover & EMD)</p>
+              </div>
+            </div>
+
+            <!-- Stage 11: two-cover scan -->
+            <div class="stepper-step pending" id="step-11" data-stage="11">
+              <div class="step-indicator">
+                <span class="step-num">11</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Two-Cover Technical Price Leak Scan</h4>
+                  <span class="step-status-tag" id="step-status-11">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-11">Price leak detected in Bidder E technical bid (p.1: Rs. 4,61,00,000); A–D clean</p>
+              </div>
+            </div>
+
+            <!-- Stage 12: verdicts -->
+            <div class="stepper-step pending" id="step-12" data-stage="12">
+              <div class="step-indicator">
+                <span class="step-num">12</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Statutory Verdicts & L1 Determination</h4>
+                  <span class="step-status-tag" id="step-status-12">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-12">Adjudication complete: A: PASS (L1), B: FAIL, C: REVIEW, D: FAIL, E: FAIL</p>
+              </div>
+            </div>
+
+            <!-- Stage 13: audit ledger -->
+            <div class="stepper-step pending" id="step-13" data-stage="13">
+              <div class="step-indicator">
+                <span class="step-num">13</span>
+                <span class="step-icon done-icon">✓</span>
+                <span class="step-spinner"></span>
+              </div>
+              <div class="step-content">
+                <div class="step-title-row">
+                  <h4 class="step-title">Cryptographic Audit Ledger Sealing</h4>
+                  <span class="step-status-tag" id="step-status-13">Queued</span>
+                </div>
+                <p class="step-detail" id="step-detail-13">20 entries committed; SHA-256 cryptographic hash chain verified intact</p>
               </div>
             </div>
           </div>
 
-          <div class="stepper-footer">
+          <div class="stepper-footer" id="stepper-footer">
             <div class="stepper-microcopy">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
               <span>Deterministic engine — every step is auditable.</span>
             </div>
-            <div class="stepper-progress-hint" id="stepper-progress-hint">
-              Executing engine pipeline…
+            <div class="stepper-action-wrap" id="stepper-action-wrap">
+              <span class="stepper-progress-hint" id="stepper-progress-hint">Awaiting pipeline trigger...</span>
+              <button class="btn btn-primary btn-sm" id="btn-stepper-view-dashboard" style="display: none; margin-left: 12px;">
+                <span>View Command Dashboard</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -436,13 +588,38 @@
 
       <!-- ==================== S3: Command Dashboard (§4 S3) ==================== -->
       <section class="screen-view s3-dashboard" id="screen-s3">
+        <!-- Visible API Offline / Error Banner (Hardening Pass) -->
+        <div class="s3-error-banner" id="s3-api-error" style="display: flex;">
+          <div class="s3-error-header">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>Backend Engine Offline — API Unreachable</span>
+          </div>
+          <p>Could not connect to the SatyaBid scrutiny API (<code>/api/analysis</code>). Live scrutiny data, deterministic verdicts, and audit records cannot be retrieved. Demo data is suppressed per system integrity constraints.</p>
+          <div style="margin-top: 6px;">
+            <button class="btn btn-secondary btn-sm" id="btn-retry-s3" onclick="window.location.reload()">Retry Connection</button>
+          </div>
+        </div>
+
+        <div id="s3-dashboard-content" style="display: none;">
         <!-- Page Header -->
         <div class="page-header">
           <div class="page-title-wrap">
             <h1 class="page-title" id="page-title">Bid GEM/2026/B/6123457 · 500 Desktop Computers · CPCL</h1>
-            <p class="page-subtitle" id="page-meta">Analysed just now · 6 PDFs · 14 ledger entries</p>
+            <p class="page-subtitle" id="page-meta">Analysed just now · 6 PDFs · 20 ledger entries committed</p>
           </div>
           <div class="page-header-actions">
+            <button class="btn btn-secondary" id="btn-rerun-scrutiny" style="margin-right: 8px;" title="Re-run deterministic scrutiny pipeline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align: -2px; margin-right: 4px;">
+                <path d="M23 4v6h-6"></path>
+                <path d="M1 20v-6h6"></path>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              <span>Re-run Scrutiny</span>
+            </button>
             <button class="btn btn-secondary" id="btn-jump-collusion" style="margin-right: 8px;">
               <span>Collusion Graph →</span>
             </button>
@@ -453,26 +630,35 @@
           </div>
         </div>
 
-        <!-- 4 KPI Cards Grid (§4 S3) -->
+        <!-- 5 KPI Cards Grid (Reconciled to 5 Bidders: 1 Responsive + 1 Under Review + 3 Rejected = 5) -->
         <div class="kpi-grid">
           <div class="kpi-card" id="kpi-total">
-            <div class="kpi-numeral" id="kpi-val-total">5</div>
-            <div class="kpi-label">BIDDERS ANALYSED</div>
+            <div class="kpi-numeral" id="kpi-val-total">—</div>
+            <div class="kpi-label">TOTAL ANALYSED</div>
             <div class="kpi-caption">Full digital packet review</div>
           </div>
 
           <div class="kpi-card kpi-pass" id="kpi-responsive">
             <div class="kpi-numeral-row">
-              <span class="kpi-numeral" id="kpi-val-responsive">1</span>
+              <span class="kpi-numeral" id="kpi-val-responsive">—</span>
               <span class="kpi-glyph pass">✓</span>
             </div>
             <div class="kpi-label">RESPONSIVE</div>
-            <div class="kpi-caption">Technically compliant</div>
+            <div class="kpi-caption">Technically compliant (PASS)</div>
+          </div>
+
+          <div class="kpi-card kpi-review" id="kpi-review">
+            <div class="kpi-numeral-row">
+              <span class="kpi-numeral" id="kpi-val-review">—</span>
+              <span class="kpi-glyph review">!</span>
+            </div>
+            <div class="kpi-label">UNDER REVIEW</div>
+            <div class="kpi-caption">Vigilance &amp; integrity flags</div>
           </div>
 
           <div class="kpi-card kpi-fail" id="kpi-rejected">
             <div class="kpi-numeral-row">
-              <span class="kpi-numeral" id="kpi-val-rejected">3</span>
+              <span class="kpi-numeral" id="kpi-val-rejected">—</span>
               <span class="kpi-glyph fail">✕</span>
             </div>
             <div class="kpi-label">REJECTED</div>
@@ -481,8 +667,8 @@
 
           <div class="kpi-card kpi-ring" id="kpi-ring">
             <div class="kpi-numeral-row">
-              <span class="kpi-numeral" id="kpi-val-rings">1</span>
-              <span class="kpi-subtext" id="kpi-val-ring-members">C + D</span>
+              <span class="kpi-numeral" id="kpi-val-rings">—</span>
+              <span class="kpi-subtext" id="kpi-val-ring-members" style="display:none;"></span>
             </div>
             <div class="kpi-label">SUSPECTED RING</div>
             <a href="#collusion" class="kpi-link" id="kpi-ring-link">Investigate →</a>
@@ -500,7 +686,7 @@
           </div>
           <div class="ring-banner-content">
             <span class="ring-banner-title" id="ring-banner-text">
-              Suspected cartel ring detected: <strong>C + D</strong> — 5 shared signals.
+              
             </span>
           </div>
           <a href="#collusion" class="ring-banner-action" id="ring-banner-action-link">
@@ -526,9 +712,9 @@
             <div class="l1-content">
               <div class="l1-title-row">
                 <span class="l1-tag">L1 BIDDER</span>
-                <span class="l1-bidder-name" id="l1-name">Apex Computing Solutions</span>
+                <span class="l1-bidder-name" id="l1-name"></span>
                 <span class="l1-sep">·</span>
-                <span class="l1-price" id="l1-price">₹4,32,00,000</span>
+                <span class="l1-price" id="l1-price"></span>
               </div>
               <p class="l1-subtitle">Lowest technically responsive bid (two-cover isolation: only PASS bids ranked)</p>
             </div>
@@ -560,7 +746,7 @@
                   <th class="col-verdict">Verdict</th>
                   <th class="col-price text-right">Price</th>
                   <th class="col-collusion">Collusion</th>
-                  <th class="col-action text-right">Dossier</th>
+                  <th class="col-action text-right">Actions</th>
                 </tr>
               </thead>
               <tbody id="bidder-table-body">
@@ -578,11 +764,15 @@
               </svg>
               <span>Registries (GSTN / Udyam / MCA / DPIIT) run as simulated checks in this build — labeled with <span class="badge-simulated">SIMULATED</span> wherever they appear.</span>
             </div>
-            <div class="timestamp-badge" id="audit-count-badge">
-              14 ledger entries committed
-            </div>
+            <a href="#audit" style="text-decoration:none;">
+              <div class="timestamp-badge" id="audit-count-badge">
+                Audit Ledger · Awaiting Scrutiny
+              </div>
+            </a>
           </div>
         </div>
+      
+        </div><!-- /s3-dashboard-content -->
       </section>
 
       <!-- ==================== S4: Bidder Dossier (§4 S4) ==================== -->
@@ -601,7 +791,7 @@
               <div class="toolbar-divider"></div>
               <div class="dossier-title-wrap">
                 <h1 class="dossier-company-name" id="dossier-title">C — Crestline Systems</h1>
-                <p class="dossier-meta-line" id="dossier-meta">Mumbai · 3 directors · Quote ₹4,41,00,000 · Collusion: HIGH</p>
+                <p class="dossier-meta-line" id="dossier-meta">Quote: ₹4,41,00,000 · Verdict: REVIEW · Collusion Risk: HIGH</p>
               </div>
             </div>
 
@@ -621,20 +811,33 @@
           </div>
         </div>
 
+        <!-- Executive Standing & L1 Eligibility Card -->
+        <div class="dossier-l1-card" id="dossier-l1-card" style="margin-top: 16px;">
+          <!-- Dynamically populated: Engine Output + Visually Separated Procedural Guidance -->
+        </div>
+
         <!-- Body: Two Columns (2fr / 1fr) per §4 S4 -->
-        <div class="dossier-grid">
-          <!-- Left Column (2fr): Rule checks (R1–R7 expandable rows) -->
-          <div class="dossier-rules-card">
-            <div class="dossier-card-header">
-              <div class="dossier-rules-title-group">
-                <h3 class="dossier-rules-title">Compliance Rule Checks (7 Rules)</h3>
-                <span class="dossier-rules-caption">Click any row to reveal complete rationale and citations</span>
+        <div class="dossier-grid" style="margin-top: 20px;">
+          <!-- Left Column (2fr): Rule checks (R1–R8) + Algorithmic Signals -->
+          <div class="dossier-main-column">
+            <!-- Compliance Rule Checks (8 Rules) -->
+            <div class="dossier-rules-card">
+              <div class="dossier-card-header">
+                <div class="dossier-rules-title-group">
+                  <h3 class="dossier-rules-title">Compliance Rule Checks (8 Rules)</h3>
+                  <span class="dossier-rules-caption">Click any row to reveal complete rationale and citations</span>
+                </div>
+                <span class="dossier-coverage-pill" id="dossier-coverage-pill">100% Deterministic Evidence</span>
               </div>
-              <span class="dossier-coverage-pill">100% Deterministic Evidence</span>
+
+              <div class="dossier-rules-list" id="dossier-rules-list">
+                <!-- Dynamically populated 8 expandable rule rows -->
+              </div>
             </div>
 
-            <div class="dossier-rules-list" id="dossier-rules-list">
-              <!-- Dynamically populated 7 expandable rule rows -->
+            <!-- Officer-Review Intelligence & Algorithmic Signals Card -->
+            <div class="dossier-signals-card" id="dossier-signals-card" style="margin-top: 20px;">
+              <!-- Populated dynamically with prominent advisory label -->
             </div>
           </div>
 
@@ -651,21 +854,23 @@
                     <line x1="16" y1="17" x2="8" y2="17"></line>
                     <polyline points="10 9 9 9 8 9"></polyline>
                   </svg>
-                  <h4 class="speaking-order-heading">Speaking order</h4>
+                  <h4 class="speaking-order-heading">Speaking Order</h4>
                 </div>
-                <span class="official-seal-tag">GFR Rule 173</span>
+                <span class="official-seal-tag" title="Procedural procurement reference">Procedural Ref: GFR 173</span>
               </div>
               <blockquote class="speaking-order-quote" id="dossier-speaking-order">
-                Crestline Systems is marked FOR MANUAL REVIEW before its Cover-2 bid is opened:
-                • Collusion analytics: HIGH risk relationship with 1 other bidder(s).
+                <!-- Verbatim engine speaking order -->
               </blockquote>
+              <div class="speaking-order-guidance" id="dossier-speaking-order-guidance" style="display: none;">
+                <!-- Procedural guidance block if applicable -->
+              </div>
             </div>
 
             <!-- Bidder facts definition list (§4 S4) -->
-            <div class="bidder-facts-card">
+            <div class="bidder-facts-card" style="margin-top: 20px;">
               <div class="bidder-facts-header">
-                <h4 class="bidder-facts-heading">Bidder facts</h4>
-                <span class="facts-source-caption">Extracted from Packet</span>
+                <h4 class="bidder-facts-heading">Bidder Facts</h4>
+                <span class="facts-source-caption">Extracted from Submitted Bid Packet (PDF)</span>
               </div>
               <dl class="facts-dl" id="dossier-facts-dl">
                 <!-- Dynamically populated facts -->
@@ -719,6 +924,17 @@
           <p class="rationale-text" id="rationale-text">
             Covering letter claims Rs. 24,00,000/- but the enclosed CA certificate averages Rs. 11,000,000/- (deviation 118.2%). Material inconsistency between the bidder's own documents — treated as misrepresentation.
           </p>
+          <div class="pipeline-method-desc" id="pipeline-method-desc" style="display: none; margin-top: 10px; font-size: 11px; color: var(--ink-2); font-family: 'JetBrains Mono', monospace; border-top: 1px dashed var(--line); padding-top: 8px;">
+            <span style="color: var(--navy-900); font-weight: 600;">Pipeline Method:</span> Scikit-learn TfidfVectorizer (word n-gram range 1–2, sublinear TF) + Cosine Similarity
+          </div>
+          <div class="s5-collusion-crosslink" id="s5-collusion-crosslink" style="display: none; margin-top: 10px;">
+            <a href="#collusion?pair=C-D" class="btn btn-secondary btn-sm" id="btn-s5-to-collusion" style="display: inline-flex; align-items: center; gap: 6px;">
+              <span>Investigate in Collusion Graph →</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+          </div>
         </div>
 
         <!-- Split Pane: Clause vs Document (§4 S5) -->
@@ -875,15 +1091,11 @@
               <div class="legend-title">Edge Risk:</div>
               <div class="legend-item">
                 <span class="legend-line line-high"></span>
-                <span>HIGH (Score ≥ 5.0) — Cartel Ring</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-line line-med"></span>
-                <span>MEDIUM (Score ≥ 2.5)</span>
+                <span>HIGH ring edge (score ≥ 5.0 · collusion.py:118)</span>
               </div>
               <div class="legend-item">
                 <span class="legend-line line-low"></span>
-                <span>LOW (Score &gt; 0)</span>
+                <span>LOW edge (score &gt; 0 · collusion.py:122)</span>
               </div>
             </div>
           </div>
@@ -908,8 +1120,8 @@
                 </div>
                 <span class="pill pill-sm pill-risk-high"><span class="dot"></span>HIGH RISK</span>
               </div>
-              <p class="ring-alert-desc">
-                High-confidence cartel cluster detected between <strong>Crestline Systems</strong> and <strong>Deltaforce IT Services</strong>. Multiple independent signals establish common operational control and synchronized cover bidding.
+              <p class="ring-alert-desc" id="ring-alert-desc">
+                High-confidence cartel cluster flagged between <strong>Crestline Systems</strong> and <strong>Deltaforce IT Services</strong>. 10 independent algorithmic signals suggest common operational control and synchronized cover bidding for officer review.
               </p>
               <div class="ring-alert-actions">
                 <button class="btn btn-sm btn-ring-select" id="btn-select-cd-ring">
@@ -951,15 +1163,15 @@
             <div class="toolbar-divider"></div>
             <div class="audit-title-group">
               <h2 class="audit-heading">Tamper-Evident Ledger</h2>
-              <span class="audit-subheading">SHA-256 cryptographic hash chain · 14 verified entries</span>
+              <span class="audit-subheading" id="audit-subheading">SHA-256 cryptographic hash chain · 20 verified entries</span>
             </div>
           </div>
 
           <div class="audit-toolbar-right">
             <!-- Inline verification result (§4 S7) -->
-            <div class="verify-result-inline" id="verify-result-inline">
-              <span class="verify-result-glyph">✓</span>
-              <span class="verify-result-text" id="verify-result-text">14 entries verified — chain intact</span>
+            <div class="verify-result-inline" id="verify-result-inline" style="display: none;">
+              <span class="verify-result-glyph" id="verify-result-glyph">✓</span>
+              <span class="verify-result-text" id="verify-result-text">20 entries verified — chain intact</span>
             </div>
 
             <button class="btn btn-primary btn-verify-chain" id="btn-verify-chain">
@@ -988,9 +1200,9 @@
               <h3 class="audit-card-title">Cryptographic Sequence</h3>
               <span class="audit-card-caption">All scrutiny pipeline operations sealed with previous entry hash</span>
             </div>
-            <div class="audit-chain-badge">
-              <span class="badge-dot-green"></span>
-              <span>SHA-256 Intact</span>
+            <div class="audit-chain-badge" id="audit-chain-badge">
+              <span class="badge-dot-green" id="audit-chain-dot"></span>
+              <span id="audit-chain-badge-text">SHA-256 Intact (20 entries)</span>
             </div>
           </div>
 
@@ -1000,8 +1212,9 @@
                 <tr>
                   <th class="col-seq">Seq</th>
                   <th class="col-time">Time (IST)</th>
-                  <th class="col-event">Event</th>
+                  <th class="col-event">Event / Actor</th>
                   <th class="col-details">Details (Human Summary)</th>
+                  <th class="col-prev-hash">Prev Hash (SHA-256)</th>
                   <th class="col-hash text-right">Entry Hash (SHA-256)</th>
                 </tr>
               </thead>
@@ -1018,11 +1231,78 @@
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
-              <span>Each entry commits to the previous entry's SHA-256 hash. Altering any record breaks the chain.</span>
+              <span>Each entry commits to payload_hash and the previous entry's SHA-256 hash. Altering any record breaks the chain.</span>
             </div>
             <div class="genesis-tag">
               Genesis: <code>GENESIS</code>
             </div>
+          </div>
+        </div>
+
+        <!-- Cryptographic Schema Table (§4 S7) -->
+        <div class="audit-card audit-schema-card" style="margin-top: 20px;">
+          <div class="audit-card-header">
+            <div class="audit-card-title-wrap">
+              <h3 class="audit-card-title">Cryptographic Schema &amp; Chaining Specification</h3>
+              <span class="audit-card-caption">Canonical SHA-256 seal structure committed to audit_log.json (audit.py:16–35)</span>
+            </div>
+            <span class="pill pill-sm pill-risk-none">Deterministic Schema</span>
+          </div>
+          <div class="table-responsive">
+            <table class="audit-schema-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Verification Role</th>
+                  <th>Hash Commitment Formula</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>seq</code></td>
+                  <td>Integer</td>
+                  <td>Sequence continuity (1..N)</td>
+                  <td>Directly included in <code>entry_hash</code> header</td>
+                </tr>
+                <tr>
+                  <td><code>timestamp</code></td>
+                  <td>ISO-8601 UTC</td>
+                  <td>Tamper-evident temporal order</td>
+                  <td>Directly included in <code>entry_hash</code> header</td>
+                </tr>
+                <tr>
+                  <td><code>event</code></td>
+                  <td>String</td>
+                  <td>Pipeline stage identifier</td>
+                  <td>Directly included in <code>entry_hash</code> header</td>
+                </tr>
+                <tr>
+                  <td><code>payload</code></td>
+                  <td>JSON Object</td>
+                  <td>Full operational state &amp; findings</td>
+                  <td>Sealed via <code>payload_hash</code></td>
+                </tr>
+                <tr>
+                  <td><code>payload_hash</code></td>
+                  <td>SHA-256 (64 hex)</td>
+                  <td>Payload integrity seal</td>
+                  <td><code>SHA-256(canonical_json(payload))</code></td>
+                </tr>
+                <tr>
+                  <td><code>prev_hash</code></td>
+                  <td>SHA-256 (64 hex)</td>
+                  <td>Forward hash chain link</td>
+                  <td>Preceding record's <code>entry_hash</code> (or <code>"GENESIS"</code> for seq #1)</td>
+                </tr>
+                <tr>
+                  <td><code>entry_hash</code></td>
+                  <td>SHA-256 (64 hex)</td>
+                  <td>Cryptographic block seal</td>
+                  <td><code>SHA-256(canonical_json({seq, timestamp, event, payload_hash, prev_hash}))</code></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>

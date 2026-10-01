@@ -13,10 +13,11 @@ ledger.
 1. **Ingests** tender + bidder PDFs (OCR seam for scanned pages)
 2. **Blueprints the tender** — turnover floor, EMD, past performance,
    Make-in-India local-content %, mandatory GFR 144(xi) declaration
-3. **Runs 7 compliance rules per bidder**, each citing the tender clause
+3. **Runs 8 compliance rules per bidder (R1–R8)**, each citing the tender clause
    *and* the bidder's document excerpt
 4. **Maps the collusion graph** — shared directors, phones, addresses,
-   cover-bidding price proximity, shared document metadata → suspected rings
+   cover-bidding price proximity, shared document metadata,
+   **ML paraphrase detection (TF-IDF)** → suspected rings
 5. **Issues verdicts** (PASS / FAIL / REVIEW) as speaking orders, with
    two-cover isolation: only responsive bids are ranked for L1
 6. **Seals everything** in a SHA-256 hash-chained audit ledger
@@ -29,7 +30,7 @@ labeled simulated checks until live adapters land.
 ```bash
 cd mvp
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
-.venv/bin/python diagnose.py        # 8-stage backend health check
+.venv/bin/python diagnose.py        # 13-stage backend health check (incl. ML forensics)
 .venv/bin/python run_mvp.py         # headless pipeline → mvp/outputs/
 .venv/bin/python tests/test_mvp.py  # ground-truth tests
 ```
@@ -45,6 +46,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 | `docs/ROADMAP.md` | Phased plan to the SIH deadline |
 | `docs/WORKFLOW.md` | Setup, commands, git, demo-day checklist |
 | `docs/DEMO_SCRIPT.md` | 90-second demo video script |
+| `docs/FALLBACK.md` | Track B: Streamlit reskin plan if the new UI stalls |
 | `mvp/` | Working engine + synthetic dataset + CLI + tests |
 
 ## Status

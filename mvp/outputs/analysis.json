@@ -1,0 +1,941 @@
+{
+  "blueprint": {
+    "turnover_min": {
+      "value": 15000000.0,
+      "evidence": "Minimum average annual turnover of the bidder for the last three financial years (FY 2022-23,\n2023-24, 2024-25) shall be Rs. 1,50,00,000/-",
+      "page": 1
+    },
+    "emd": {
+      "value": 200000.0,
+      "evidence": "Earnest Money Deposit (EMD): Rs. 2,00,000/-",
+      "page": 1
+    },
+    "past_performance_min": {
+      "value": 7500000.0,
+      "evidence": "Past performance: the bidder must have successfully supplied similar goods (desktop computers\n/ workstations) of cumulative order value not less than Rs. 75,00,000/-",
+      "page": 1
+    },
+    "local_content_min": {
+      "value": 50.0,
+      "evidence": "Class-I Local Supplier status must declare\nlocal content of 50% or more",
+      "page": 1
+    },
+    "requires_144xi": {
+      "value": true,
+      "evidence": "GFR Rule 144(xi): Every bidder must submit a declaration that it is not from a country sharing a\nland border with India, OR that it is registered with the Competent Authority (DPIIT) as required under\nRule 144(xi) of the General Financial Rules 2017. Bids without this declaration shall be\nsummarily rejected",
+      "page": 1
+    },
+    "delivery_days": {
+      "value": 45.0,
+      "evidence": "within 45 days of purchase\norder",
+      "page": 1
+    },
+    "bid_number": {
+      "value": "GEM/2026/B/6123457",
+      "evidence": "Bid Number: GEM/2026/B/6123457",
+      "page": 1
+    },
+    "estimated_value": {
+      "value": 45000000.0,
+      "evidence": "Estimated bid value: Rs. 4,50,00,000/-",
+      "page": 1
+    }
+  },
+  "verdicts": [
+    {
+      "bidder_id": "A",
+      "name": "Apex Computing Solutions",
+      "verdict": "PASS",
+      "price": 43200000.0,
+      "speaking_order": "Apex Computing Solutions is TECHNICALLY RESPONSIVE. All eligibility criteria are met against tender clauses.",
+      "checks": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "rationale": "CA-certified 3-year average turnover is Rs. 28,333,333/- against the required Rs. 15,000,000/-. Requirement met."
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "rationale": "Covering letter claims Rs. 28,000,000/- but the enclosed CA certificate averages Rs. 28,333,333/- (deviation 1.2%). Documents are consistent."
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "rationale": "ICAI membership number 'FCA-023418' matches the valid FCA/ACA-###### pattern (simulated registry check passed)."
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "rationale": "Bidder claims 'Class-I Local Supplier' with declared local content 62.0%. Class-I requires ≥ 50%. Declaration is consistent."
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "rationale": "Declaration furnished — bidder eligible under Rule 144(xi)."
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "rationale": "Cumulative similar-supply value Rs. 11,000,000/- against required Rs. 7,500,000/-. Requirement met."
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "rationale": "EMD instrument enclosed."
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "rationale": "PAN 'AAKCA1234F' and GSTIN '33AAKCA1234F1Z5' match the statutory formats (format-level check; live registry verification is a planned integration)."
+        }
+      ],
+      "evidence": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "clause": "Minimum average annual turnover of the bidder for the last three financial years (FY 2022-23,\n2023-24, 2024-25) shall be Rs. 1,50,00,000/-",
+          "clause_page": 1,
+          "document": "CA certificate rows: 26,000,000, 29,000,000, 30,000,000 (avg 28,333,333)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "clause": "",
+          "clause_page": null,
+          "document": "average annual\nturnover for the last three financial years is Rs. 2,80,00,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "clause": "GFR tender clause 3: turnover 'duly certified by a practicing Chartered Accountant with valid ICAI membership number.'",
+          "clause_page": 1,
+          "document": "Membership No. FCA-023418 (CA R. Venkatesh)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "clause": "Class-I Local Supplier status must declare\nlocal content of 50% or more",
+          "clause_page": 1,
+          "document": "Local content declared: 62.0%; status claimed: Class-I Local Supplier",
+          "doc_page": 1
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "clause": "GFR Rule 144(xi): Every bidder must submit a declaration that it is not from a country sharing a\nland border with India, OR that it is registered with the Competent Authority (DPIIT) as required under\nRule 144(xi) of the General Financial Rules 2017. Bids without this declaration shall be\nsummarily rejected",
+          "clause_page": 1,
+          "document": "Declaration present in bid.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "clause": "Past performance: the bidder must have successfully supplied similar goods (desktop computers\n/ workstations) of cumulative order value not less than Rs. 75,00,000/-",
+          "clause_page": 1,
+          "document": "Past performance declared: Rs. 11,000,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "clause": "Earnest Money Deposit (EMD): Rs. 2,00,000/-",
+          "clause_page": 1,
+          "document": "EMD section of covering letter.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "clause": "Tender requires valid bidder identity documents with the bid.",
+          "clause_page": 1,
+          "document": "PAN: AAKCA1234F; GSTIN: 33AAKCA1234F1Z5",
+          "doc_page": 1
+        }
+      ],
+      "collusion_risk": "NONE"
+    },
+    {
+      "bidder_id": "B",
+      "name": "Brightline Technologies",
+      "verdict": "FAIL",
+      "price": 45500000.0,
+      "speaking_order": "Brightline Technologies is NOT TECHNICALLY RESPONSIVE and its Cover-2 financial bid must not be opened, for the following reasons:\n  • R1 · Minimum average annual turnover: CA-certified 3-year average turnover is Rs. 11,000,000/- against the required Rs. 15,000,000/-. Shortfall — bidder is not financially eligible.\n  • R2 · Turnover claim vs CA certificate consistency: Covering letter claims Rs. 24,000,000/- but the enclosed CA certificate averages Rs. 11,000,000/- (deviation 118.2%). Material inconsistency between the bidder's own documents — treated as misrepresentation.\n  • R3 · CA certificate authenticity (membership format): ICAI membership number 'FCA-0987X4' does NOT match the ICAI membership pattern — the certificate cannot be verified and is treated as suspect.\n  • R8 · Bidder identity documents (PAN/GSTIN): PAN 'B1KPB5678Q' does not match the Income-Tax PAN pattern (5 letters + 4 digits + 1 letter) — the identity document is suspect.",
+      "checks": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "FAIL",
+          "rationale": "CA-certified 3-year average turnover is Rs. 11,000,000/- against the required Rs. 15,000,000/-. Shortfall — bidder is not financially eligible."
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "FAIL",
+          "rationale": "Covering letter claims Rs. 24,000,000/- but the enclosed CA certificate averages Rs. 11,000,000/- (deviation 118.2%). Material inconsistency between the bidder's own documents — treated as misrepresentation."
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "FAIL",
+          "rationale": "ICAI membership number 'FCA-0987X4' does NOT match the ICAI membership pattern — the certificate cannot be verified and is treated as suspect."
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "rationale": "Bidder claims 'Class-I Local Supplier' with declared local content 58.0%. Class-I requires ≥ 50%. Declaration is consistent."
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "rationale": "Declaration furnished — bidder eligible under Rule 144(xi)."
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "rationale": "Cumulative similar-supply value Rs. 8,200,000/- against required Rs. 7,500,000/-. Requirement met."
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "rationale": "EMD instrument enclosed."
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "FAIL",
+          "rationale": "PAN 'B1KPB5678Q' does not match the Income-Tax PAN pattern (5 letters + 4 digits + 1 letter) — the identity document is suspect."
+        }
+      ],
+      "evidence": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "FAIL",
+          "clause": "Minimum average annual turnover of the bidder for the last three financial years (FY 2022-23,\n2023-24, 2024-25) shall be Rs. 1,50,00,000/-",
+          "clause_page": 1,
+          "document": "CA certificate rows: 10,000,000, 12,000,000, 11,000,000 (avg 11,000,000)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "FAIL",
+          "clause": "",
+          "clause_page": null,
+          "document": "average annual\nturnover for the last three financial years is Rs. 2,40,00,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "FAIL",
+          "clause": "GFR tender clause 3: turnover 'duly certified by a practicing Chartered Accountant with valid ICAI membership number.'",
+          "clause_page": 1,
+          "document": "Membership No. FCA-0987X4 (CA D. Kulkarni)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "clause": "Class-I Local Supplier status must declare\nlocal content of 50% or more",
+          "clause_page": 1,
+          "document": "Local content declared: 58.0%; status claimed: Class-I Local Supplier",
+          "doc_page": 1
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "clause": "GFR Rule 144(xi): Every bidder must submit a declaration that it is not from a country sharing a\nland border with India, OR that it is registered with the Competent Authority (DPIIT) as required under\nRule 144(xi) of the General Financial Rules 2017. Bids without this declaration shall be\nsummarily rejected",
+          "clause_page": 1,
+          "document": "Declaration present in bid.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "clause": "Past performance: the bidder must have successfully supplied similar goods (desktop computers\n/ workstations) of cumulative order value not less than Rs. 75,00,000/-",
+          "clause_page": 1,
+          "document": "Past performance declared: Rs. 8,200,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "clause": "Earnest Money Deposit (EMD): Rs. 2,00,000/-",
+          "clause_page": 1,
+          "document": "EMD section of covering letter.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "FAIL",
+          "clause": "Tender requires valid bidder identity documents with the bid.",
+          "clause_page": 1,
+          "document": "PAN: B1KPB5678Q; GSTIN: 29BBKPB5678Q1Z2",
+          "doc_page": 1
+        }
+      ],
+      "collusion_risk": "LOW"
+    },
+    {
+      "bidder_id": "C",
+      "name": "Crestline Systems",
+      "verdict": "REVIEW",
+      "price": 44100000.0,
+      "speaking_order": "Crestline Systems is marked FOR MANUAL REVIEW before its Cover-2 bid is opened:\n  • Collusion analytics: HIGH risk relationship with 1 other bidder(s). Common directors/partners: Anita Desai, Vikram Shah Identical contact phone: 98200-44556 Identical registered address: 8, Andheri MIDC, Mumbai 400093 Quoted prices within 0.68% (Rs. 44,100,000 vs Rs. 44,400,000) — possible cover bidding Both bid documents authored on 'Crestline-PC-03' (identical PDF metadata) Same bank account 50200099887711 across 'competing' bidders Bids submitted from the same IP 103.21.44.18 Same DSC token operator: eMudhra Token #EM-88412 (Vikram Shah) 12 shared authorship marker(s) between C and D (identical sentences/typos/metadata): Authorised signatory: Vikram Shah\nDate: 13-09-2026\nPlace: Mu; We have carefully perused the tender document and unconditio; accept ML paraphrase detection (TF-IDF cosine 0.62): same draft, different words",
+      "checks": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "rationale": "CA-certified 3-year average turnover is Rs. 21,000,000/- against the required Rs. 15,000,000/-. Requirement met."
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "rationale": "Covering letter claims Rs. 21,000,000/- but the enclosed CA certificate averages Rs. 21,000,000/- (deviation 0.0%). Documents are consistent."
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "rationale": "ICAI membership number 'ACA-117204' matches the valid FCA/ACA-###### pattern (simulated registry check passed)."
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "rationale": "Bidder claims 'Class-I Local Supplier' with declared local content 55.0%. Class-I requires ≥ 50%. Declaration is consistent."
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "rationale": "Declaration furnished — bidder eligible under Rule 144(xi)."
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "rationale": "Cumulative similar-supply value Rs. 9,000,000/- against required Rs. 7,500,000/-. Requirement met."
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "rationale": "EMD instrument enclosed."
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "rationale": "PAN 'AAKCC8899R' and GSTIN '27AAKCC8899R1Z3' match the statutory formats (format-level check; live registry verification is a planned integration)."
+        }
+      ],
+      "evidence": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "clause": "Minimum average annual turnover of the bidder for the last three financial years (FY 2022-23,\n2023-24, 2024-25) shall be Rs. 1,50,00,000/-",
+          "clause_page": 1,
+          "document": "CA certificate rows: 20,000,000, 21,000,000, 22,000,000 (avg 21,000,000)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "clause": "",
+          "clause_page": null,
+          "document": "average annual\nturnover for the last three financial years is Rs. 2,10,00,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "clause": "GFR tender clause 3: turnover 'duly certified by a practicing Chartered Accountant with valid ICAI membership number.'",
+          "clause_page": 1,
+          "document": "Membership No. ACA-117204 (CA P. Bhatt)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "clause": "Class-I Local Supplier status must declare\nlocal content of 50% or more",
+          "clause_page": 1,
+          "document": "Local content declared: 55.0%; status claimed: Class-I Local Supplier",
+          "doc_page": 1
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "clause": "GFR Rule 144(xi): Every bidder must submit a declaration that it is not from a country sharing a\nland border with India, OR that it is registered with the Competent Authority (DPIIT) as required under\nRule 144(xi) of the General Financial Rules 2017. Bids without this declaration shall be\nsummarily rejected",
+          "clause_page": 1,
+          "document": "Declaration present in bid.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "clause": "Past performance: the bidder must have successfully supplied similar goods (desktop computers\n/ workstations) of cumulative order value not less than Rs. 75,00,000/-",
+          "clause_page": 1,
+          "document": "Past performance declared: Rs. 9,000,000/-",
+          "doc_page": 2
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "clause": "Earnest Money Deposit (EMD): Rs. 2,00,000/-",
+          "clause_page": 1,
+          "document": "EMD section of covering letter.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "clause": "Tender requires valid bidder identity documents with the bid.",
+          "clause_page": 1,
+          "document": "PAN: AAKCC8899R; GSTIN: 27AAKCC8899R1Z3",
+          "doc_page": 1
+        }
+      ],
+      "collusion_risk": "HIGH"
+    },
+    {
+      "bidder_id": "D",
+      "name": "Deltaforce IT Services",
+      "verdict": "FAIL",
+      "price": 44400000.0,
+      "speaking_order": "Deltaforce IT Services is NOT TECHNICALLY RESPONSIVE and its Cover-2 financial bid must not be opened, for the following reasons:\n  • R5 · GFR Rule 144(xi) land-border declaration: No declaration furnished. The tender states bids without this declaration shall be summarily rejected.\n  • Collusion analytics: HIGH risk relationship with 1 other bidder(s). Common directors/partners: Anita Desai, Vikram Shah Identical contact phone: 98200-44556 Identical registered address: 8, Andheri MIDC, Mumbai 400093 Quoted prices within 0.68% (Rs. 44,100,000 vs Rs. 44,400,000) — possible cover bidding Both bid documents authored on 'Crestline-PC-03' (identical PDF metadata) Same bank account 50200099887711 across 'competing' bidders Bids submitted from the same IP 103.21.44.18 Same DSC token operator: eMudhra Token #EM-88412 (Vikram Shah) 12 shared authorship marker(s) between C and D (identical sentences/typos/metadata): Authorised signatory: Vikram Shah\nDate: 13-09-2026\nPlace: Mu; We have carefully perused the tender document and unconditio; accept ML paraphrase detection (TF-IDF cosine 0.62): same draft, different words",
+      "checks": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "rationale": "CA-certified 3-year average turnover is Rs. 19,000,000/- against the required Rs. 15,000,000/-. Requirement met."
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "rationale": "Covering letter claims Rs. 19,000,000/- but the enclosed CA certificate averages Rs. 19,000,000/- (deviation 0.0%). Documents are consistent."
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "rationale": "ICAI membership number 'ACA-117204' matches the valid FCA/ACA-###### pattern (simulated registry check passed)."
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "rationale": "Bidder claims 'Class-I Local Supplier' with declared local content 52.0%. Class-I requires ≥ 50%. Declaration is consistent."
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "FAIL",
+          "rationale": "No declaration furnished. The tender states bids without this declaration shall be summarily rejected."
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "rationale": "Cumulative similar-supply value Rs. 7,800,000/- against required Rs. 7,500,000/-. Requirement met."
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "rationale": "EMD instrument enclosed."
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "rationale": "PAN 'AAKCD9900S' and GSTIN '27AAKCD9900S1Z4' match the statutory formats (format-level check; live registry verification is a planned integration)."
+        }
+      ],
+      "evidence": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "clause": "Minimum average annual turnover of the bidder for the last three financial years (FY 2022-23,\n2023-24, 2024-25) shall be Rs. 1,50,00,000/-",
+          "clause_page": 1,
+          "document": "CA certificate rows: 18,000,000, 19,000,000, 20,000,000 (avg 19,000,000)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "clause": "",
+          "clause_page": null,
+          "document": "average annual\nturnover for the last three financial years is Rs. 1,90,00,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "clause": "GFR tender clause 3: turnover 'duly certified by a practicing Chartered Accountant with valid ICAI membership number.'",
+          "clause_page": 1,
+          "document": "Membership No. ACA-117204 (CA P. Bhatt)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "PASS",
+          "clause": "Class-I Local Supplier status must declare\nlocal content of 50% or more",
+          "clause_page": 1,
+          "document": "Local content declared: 52.0%; status claimed: Class-I Local Supplier",
+          "doc_page": 1
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "FAIL",
+          "clause": "GFR Rule 144(xi): Every bidder must submit a declaration that it is not from a country sharing a\nland border with India, OR that it is registered with the Competent Authority (DPIIT) as required under\nRule 144(xi) of the General Financial Rules 2017. Bids without this declaration shall be\nsummarily rejected",
+          "clause_page": 1,
+          "document": "Section 5 of bid: '[No declaration furnished]'",
+          "doc_page": 1
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "PASS",
+          "clause": "Past performance: the bidder must have successfully supplied similar goods (desktop computers\n/ workstations) of cumulative order value not less than Rs. 75,00,000/-",
+          "clause_page": 1,
+          "document": "Past performance declared: Rs. 7,800,000/-",
+          "doc_page": 2
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "clause": "Earnest Money Deposit (EMD): Rs. 2,00,000/-",
+          "clause_page": 1,
+          "document": "EMD section of covering letter.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "clause": "Tender requires valid bidder identity documents with the bid.",
+          "clause_page": 1,
+          "document": "PAN: AAKCD9900S; GSTIN: 27AAKCD9900S1Z4",
+          "doc_page": 1
+        }
+      ],
+      "collusion_risk": "HIGH"
+    },
+    {
+      "bidder_id": "E",
+      "name": "Everest Digital",
+      "verdict": "FAIL",
+      "price": 46100000.0,
+      "speaking_order": "Everest Digital is NOT TECHNICALLY RESPONSIVE and its Cover-2 financial bid must not be opened, for the following reasons:\n  • R4 · Make-in-India local content declaration: Bidder claims 'Class-I Local Supplier' with declared local content 28.0%. Class-I requires ≥ 50%. Declared content only qualifies as Class-II — the Class-I claim is a misrepresentation under the DPIIT Order.\n  • R6 · Past performance (similar supplies): Cumulative similar-supply value Rs. 4,000,000/- against required Rs. 7,500,000/-. Bidder does not meet the experience criterion.",
+      "checks": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "rationale": "CA-certified 3-year average turnover is Rs. 22,000,000/- against the required Rs. 15,000,000/-. Requirement met."
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "rationale": "Covering letter claims Rs. 22,000,000/- but the enclosed CA certificate averages Rs. 22,000,000/- (deviation 0.0%). Documents are consistent."
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "rationale": "ICAI membership number 'FCA-066531' matches the valid FCA/ACA-###### pattern (simulated registry check passed)."
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "FAIL",
+          "rationale": "Bidder claims 'Class-I Local Supplier' with declared local content 28.0%. Class-I requires ≥ 50%. Declared content only qualifies as Class-II — the Class-I claim is a misrepresentation under the DPIIT Order."
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "rationale": "Declaration furnished — bidder eligible under Rule 144(xi)."
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "FAIL",
+          "rationale": "Cumulative similar-supply value Rs. 4,000,000/- against required Rs. 7,500,000/-. Bidder does not meet the experience criterion."
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "rationale": "EMD instrument enclosed."
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "rationale": "PAN 'AAKCE3344T' and GSTIN '27AAKCE3344T1Z6' match the statutory formats (format-level check; live registry verification is a planned integration)."
+        }
+      ],
+      "evidence": [
+        {
+          "rule": "R1 · Minimum average annual turnover",
+          "status": "PASS",
+          "clause": "Minimum average annual turnover of the bidder for the last three financial years (FY 2022-23,\n2023-24, 2024-25) shall be Rs. 1,50,00,000/-",
+          "clause_page": 1,
+          "document": "CA certificate rows: 21,000,000, 22,000,000, 23,000,000 (avg 22,000,000)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R2 · Turnover claim vs CA certificate consistency",
+          "status": "PASS",
+          "clause": "",
+          "clause_page": null,
+          "document": "average annual\nturnover for the last three financial years is Rs. 2,20,00,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R3 · CA certificate authenticity (membership format)",
+          "status": "PASS",
+          "clause": "GFR tender clause 3: turnover 'duly certified by a practicing Chartered Accountant with valid ICAI membership number.'",
+          "clause_page": 1,
+          "document": "Membership No. FCA-066531 (CA S. Patil)",
+          "doc_page": 1
+        },
+        {
+          "rule": "R4 · Make-in-India local content declaration",
+          "status": "FAIL",
+          "clause": "Class-I Local Supplier status must declare\nlocal content of 50% or more",
+          "clause_page": 1,
+          "document": "Local content declared: 28.0%; status claimed: Class-I Local Supplier",
+          "doc_page": 1
+        },
+        {
+          "rule": "R5 · GFR Rule 144(xi) land-border declaration",
+          "status": "PASS",
+          "clause": "GFR Rule 144(xi): Every bidder must submit a declaration that it is not from a country sharing a\nland border with India, OR that it is registered with the Competent Authority (DPIIT) as required under\nRule 144(xi) of the General Financial Rules 2017. Bids without this declaration shall be\nsummarily rejected",
+          "clause_page": 1,
+          "document": "Declaration present in bid.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R6 · Past performance (similar supplies)",
+          "status": "FAIL",
+          "clause": "Past performance: the bidder must have successfully supplied similar goods (desktop computers\n/ workstations) of cumulative order value not less than Rs. 75,00,000/-",
+          "clause_page": 1,
+          "document": "Past performance declared: Rs. 4,000,000/-",
+          "doc_page": 1
+        },
+        {
+          "rule": "R7 · Earnest Money Deposit",
+          "status": "PASS",
+          "clause": "Earnest Money Deposit (EMD): Rs. 2,00,000/-",
+          "clause_page": 1,
+          "document": "EMD section of covering letter.",
+          "doc_page": 1
+        },
+        {
+          "rule": "R8 · Bidder identity documents (PAN/GSTIN)",
+          "status": "PASS",
+          "clause": "Tender requires valid bidder identity documents with the bid.",
+          "clause_page": 1,
+          "document": "PAN: AAKCE3344T; GSTIN: 27AAKCE3344T1Z6",
+          "doc_page": 1
+        }
+      ],
+      "collusion_risk": "LOW"
+    }
+  ],
+  "collusion": {
+    "edges": [
+      {
+        "pair": [
+          "B",
+          "E"
+        ],
+        "names": [
+          "Brightline Technologies",
+          "Everest Digital"
+        ],
+        "score": 0.7,
+        "risk": "LOW",
+        "signals": [
+          {
+            "type": "price_proximity",
+            "weight": 0.7,
+            "detail": "Quoted prices within 1.30% (Rs. 45,500,000 vs Rs. 46,100,000) — possible cover bidding"
+          }
+        ]
+      },
+      {
+        "pair": [
+          "C",
+          "D"
+        ],
+        "names": [
+          "Crestline Systems",
+          "Deltaforce IT Services"
+        ],
+        "score": 26.32,
+        "risk": "HIGH",
+        "signals": [
+          {
+            "type": "shared_directors",
+            "weight": 6.0,
+            "detail": "Common directors/partners: Anita Desai, Vikram Shah"
+          },
+          {
+            "type": "shared_phone",
+            "weight": 2.5,
+            "detail": "Identical contact phone: 98200-44556"
+          },
+          {
+            "type": "shared_address",
+            "weight": 2.0,
+            "detail": "Identical registered address: 8, Andheri MIDC, Mumbai 400093"
+          },
+          {
+            "type": "price_proximity",
+            "weight": 1.32,
+            "detail": "Quoted prices within 0.68% (Rs. 44,100,000 vs Rs. 44,400,000) — possible cover bidding"
+          },
+          {
+            "type": "shared_doc_author",
+            "weight": 1.5,
+            "detail": "Both bid documents authored on 'Crestline-PC-03' (identical PDF metadata)"
+          },
+          {
+            "type": "shared_bank",
+            "weight": 3.5,
+            "detail": "Same bank account 50200099887711 across 'competing' bidders"
+          },
+          {
+            "type": "shared_ip",
+            "weight": 3.0,
+            "detail": "Bids submitted from the same IP 103.21.44.18"
+          },
+          {
+            "type": "shared_dsc",
+            "weight": 3.0,
+            "detail": "Same DSC token operator: eMudhra Token #EM-88412 (Vikram Shah)"
+          },
+          {
+            "type": "common_authorship_markers",
+            "weight": 2.0,
+            "detail": "12 shared authorship marker(s) between C and D (identical sentences/typos/metadata): Authorised signatory: Vikram Shah\nDate: 13-09-2026\nPlace: Mu; We have carefully perused the tender document and unconditio; accept"
+          },
+          {
+            "type": "ml_paraphrase",
+            "weight": 1.5,
+            "detail": "ML paraphrase detection (TF-IDF cosine 0.62): same draft, different words"
+          }
+        ]
+      }
+    ],
+    "rings": [
+      [
+        "C",
+        "D"
+      ]
+    ]
+  },
+  "price_forensics": {
+    "n": 5,
+    "stats": {
+      "mean": 44660000.0,
+      "stdev": 1150217.37,
+      "cv": 0.0258,
+      "spread": 0.0671,
+      "diffp": 0.0208,
+      "rel_distance": 0.962,
+      "skewness": 0.075
+    },
+    "findings": [
+      {
+        "screen": "CV",
+        "severity": "MEDIUM",
+        "value": 0.0258,
+        "threshold": 0.05,
+        "bidders": [
+          "A",
+          "C",
+          "D",
+          "B",
+          "E"
+        ],
+        "detail": "Coefficient of variation 2.58% is abnormally low (cartel benchmark ~3.5% vs ~7.9% competitive) — bids are clustered far tighter than genuine price rivalry produces."
+      },
+      {
+        "screen": "PRICE_CLUSTER",
+        "severity": "MEDIUM",
+        "value": 0.0068,
+        "threshold": 0.01,
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "detail": "C and D quoted within 0.68% (Rs. 44,100,000 vs Rs. 44,400,000) — possible cover-bid pair."
+      }
+    ],
+    "note": "Benford test skipped: needs >= 10 priced bids (have 5)."
+  },
+  "doc_forensics": {
+    "findings": [
+      {
+        "type": "shared_boilerplate",
+        "severity": "MEDIUM",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "Authorised signatory: Vikram Shah\nDate: 13-09-2026\nPlace: Mumbai",
+        "detail": "Identical sentence in 2 of 5 bids (C, D) — not tender wording, not compliance boilerplate. Suggests common authorship."
+      },
+      {
+        "type": "shared_boilerplate",
+        "severity": "MEDIUM",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "We have carefully perused the tender document and unconditionally accept all terms and conditions\nstipulated theirin without any devation whatsoever",
+        "detail": "Identical sentence in 2 of 5 bids (C, D) — not tender wording, not compliance boilerplate. Suggests common authorship."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "accept",
+        "detail": "Distinctive token 'accept' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "carefully",
+        "detail": "Distinctive token 'carefully' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "conditions",
+        "detail": "Distinctive token 'conditions' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "devation",
+        "detail": "Distinctive token 'devation' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "perused",
+        "detail": "Distinctive token 'perused' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "stipulated",
+        "detail": "Distinctive token 'stipulated' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "theirin",
+        "detail": "Distinctive token 'theirin' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "unconditionally",
+        "detail": "Distinctive token 'unconditionally' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "shared_marker",
+        "severity": "HIGH",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "whatsoever",
+        "detail": "Distinctive token 'whatsoever' appears in bids C, D but in no other bid and not in the tender — identical-mistake / shared-draft indicator."
+      },
+      {
+        "type": "metadata_triple",
+        "severity": "MEDIUM",
+        "bidders": [
+          "C",
+          "D"
+        ],
+        "text": "crestline-pc-03 / (unspecified) / reportlab pdf library - (opensource)",
+        "detail": "Bids C, D share identical author/creator/producer metadata — produced on the same machine/software."
+      }
+    ],
+    "n_shared_boilerplate": 2,
+    "n_shared_markers": 9
+  },
+  "ml_forensics": {
+    "paraphrase": {
+      "findings": [
+        {
+          "type": "paraphrased_boilerplate",
+          "severity": "HIGH",
+          "bidders": [
+            "C",
+            "D"
+          ],
+          "similarity": 0.619,
+          "text_a": "our organisation possesses adequate technical manpower and infrastructure to complete the entire supply within the stipulated delivery period",
+          "text_b": "our company has adequate technical manpower and infrastructure to execute the entire supply within the stipulated delivery schedule",
+          "detail": "ML (TF-IDF cosine 0.62): bids C, D share the same draft in different words — exact sentence matching misses this, paraphrase detection catches it. Suggests common authorship."
+        }
+      ],
+      "max_similarity": 1.0
+    },
+    "fuzzy": {
+      "findings": []
+    }
+  },
+  "tender_integrity": {
+    "seal": "e41183b32cc6ea57c92d0938a4435fd130708b0a0eaca182ad0c46bcab495ac3",
+    "corrigendum": "tender_corrigendum.pdf",
+    "relaxations": [
+      {
+        "requirement": "minimum average annual turnover",
+        "before": 15000000.0,
+        "after": 10000000.0,
+        "type": "relaxation",
+        "detail": "minimum average annual turnover relaxed from Rs. 15,000,000/- to Rs. 10,000,000/- after publication — check whether the new threshold matches a specific bidder's credentials."
+      },
+      {
+        "requirement": "Earnest Money Deposit",
+        "before": 200000.0,
+        "after": 100000.0,
+        "type": "relaxation",
+        "detail": "Earnest Money Deposit relaxed from Rs. 200,000/- to Rs. 100,000/- after publication — check whether the new threshold matches a specific bidder's credentials."
+      }
+    ]
+  },
+  "twocover": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": [],
+    "E": [
+      {
+        "page": 1,
+        "excerpt": "commercial offer works out to approximately Rs. 4,61,00,000/- for the complete scope of supply.\n2. Bidder particulars.\nField\nDetails\nLegal name\nEverest Digital",
+        "detail": "Price indication 'Rs. 4,61,00,000' found in the TECHNICAL bid (p1) near 'commercial offer' — GeM terms make this a disqualification ground."
+      }
+    ]
+  },
+  "l1": "A"
+}

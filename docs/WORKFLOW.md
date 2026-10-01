@@ -32,7 +32,7 @@ python mvp/serve.py
 ```
 Open `http://localhost:8000` in the browser.
 
-Note: The early Streamlit prototype has been retired and renamed to `mvp/streamlit_legacy.py`. Do not iterate on it. See `docs/FALLBACK.md` for full fallback runbook.
+Note: The early Streamlit prototype has been retired and renamed to `mvp/app.py`. Do not iterate on it. See `docs/FALLBACK.md` for full fallback runbook.
 
 ## Git workflow
 - `main` always runs: diagnose 8/8 PASS + tests PASS.

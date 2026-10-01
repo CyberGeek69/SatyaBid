@@ -17,8 +17,17 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from satyabid import (extract_pages, extract_metadata, extract_blueprint,
                       run_checks, analyse_collusion, AuditLedger,
-                      build_verdict)
+                      build_verdict, screen_prices, analyse_documents,
+                      doc_pair_markers, seal_tender, diff_requirements,
+                      scan_price_hints, paraphrase_screen,
+                      fuzzy_entity_screen, ml_pair_markers)
 from satyabid.checks import parse_bidder
+from satyabid.ingest import full_text
+import re as _re
+
+
+def _norm_tok(t):
+    return _re.sub(r"[^a-z0-9]", "", t.lower())
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(BASE, "data")
@@ -30,66 +39,105 @@ def bidder_id_from_path(path):
     return m.group(1) if m else os.path.basename(path)
 
 
-def run(tender_path, bid_paths, ledger=None, stage_callback=None):
+def run(tender_path, bid_paths, ledger=None):
     ledger = ledger or AuditLedger()
     ledger.append("pipeline_started",
                   {"tender": os.path.basename(tender_path),
                    "bids": [os.path.basename(p) for p in bid_paths]})
 
-    # Stage 1: Ingesting documents (n files, p pages)
     t_pages = extract_pages(tender_path)
-    total_pages = len(t_pages)
+    blueprint = extract_blueprint(t_pages)
+    ledger.append("tender_blueprinted",
+                  {"requirements": list(blueprint.keys())})
+
+    # tender integrity: seal the published tender; catch mid-tender changes
+    tseal = seal_tender(t_pages)
+    ledger.append("tender_sealed", {"sha256": tseal})
+    corr_path = os.path.join(os.path.dirname(tender_path),
+                             "tender_corrigendum.pdf")
+    tender_integrity = {"seal": tseal, "corrigendum": None,
+                        "relaxations": []}
+    if os.path.exists(corr_path):
+        corr_pages = extract_pages(corr_path)
+        corr_bp = extract_blueprint(corr_pages)
+        relax = diff_requirements(blueprint, corr_bp)
+        changed = seal_tender(corr_pages) != tseal
+        tender_integrity["corrigendum"] = os.path.basename(corr_path)
+        tender_integrity["relaxations"] = relax
+        ledger.append("corrigendum_checked",
+                      {"file": os.path.basename(corr_path),
+                       "requirements_relaxed": [r["requirement"]
+                                                for r in relax
+                                                if r["type"] == "relaxation"]})
 
     facts_list, verdicts = [], []
+    bid_texts, bid_metas, bid_pages = {}, {}, {}
     for bp in sorted(bid_paths):
         bid = bidder_id_from_path(bp)
         pages = extract_pages(bp)
-        total_pages += len(pages)
         meta = extract_metadata(bp)
         m = re.search(r"Bidder:\s*(.+?),", "\n".join(t for _, t, _ in pages))
         name = m.group(1).strip() if m else bid
         facts = parse_bidder(bid, name, pages, meta)
         facts_list.append(facts)
+        bid_texts[bid] = full_text(pages)
+        bid_metas[bid] = meta
+        bid_pages[bid] = pages
         ledger.append("bidder_ingested",
                       {"bidder": bid, "name": name,
                        "doc_author": meta.get("author")})
 
-    if stage_callback:
-        stage_callback(1, "Ingesting documents", f"{len(bid_paths) + 1} files, {total_pages} pages parsed")
+    # document forensics BEFORE the graph: shared-draft markers feed it.
+    # identity-field tokens are excluded — the graph already covers them.
+    ident_toks = set()
+    for f in facts_list:
+        for src in [f.address, f.dsc_operator, f.email,
+                    " ".join(f.directors)]:
+            ident_toks.update(_norm_tok(t) for t in src.split())
+    docf = analyse_documents(bid_texts,
+                             tender_text=full_text(t_pages),
+                             metadatas=bid_metas,
+                             identity_tokens=ident_toks)
+    doc_pairs = doc_pair_markers(docf)
+    ledger.append("doc_forensics",
+                  {"findings": len(docf["findings"]),
+                   "shared_markers": docf["n_shared_markers"]})
 
-    # Stage 2: Blueprinting tender
-    blueprint = extract_blueprint(t_pages)
-    ledger.append("tender_blueprinted",
-                  {"requirements": list(blueprint.keys())})
+    # ML forensics: TF-IDF paraphrase detection + fuzzy entity matching.
+    # ML proposes similarity signals; deterministic rules still decide.
+    mlp = paraphrase_screen(bid_texts, tender_text=full_text(t_pages))
+    mlf = fuzzy_entity_screen(facts_list)
+    ml_pairs = ml_pair_markers(mlp, mlf)
+    ledger.append("ml_forensics",
+                  {"paraphrase_findings": len(mlp["findings"]),
+                   "fuzzy_findings": len(mlf["findings"]),
+                   "pairs_flagged": len(ml_pairs)})
 
-    if stage_callback:
-        stage_callback(2, "Blueprinting tender", f"{len(blueprint)} requirements extracted")
-
-    # Stage 3: Running compliance rules
-    checks_count = 0
-    checks_map = {}
-    for facts in facts_list:
-        checks = run_checks(facts, blueprint)
-        checks_count += len(checks)
-        checks_map[facts.bidder_id] = checks
-
-    if stage_callback:
-        stage_callback(3, f"Running 7 compliance rules × {len(facts_list)} bidders", f"{checks_count} compliance checks evaluated")
-
-    # Stage 4: Mapping cross-bidder relationships
-    coll = analyse_collusion(facts_list)
+    coll = analyse_collusion(facts_list, doc_pairs=doc_pairs,
+                             ml_pairs=ml_pairs)
     ledger.append("collusion_analysis",
                   {"edges": [(e["pair"], e["risk"], e["score"])
                              for e in coll["edges"]],
                    "rings": coll["rings"]})
 
-    if stage_callback:
-        ring_text = f"suspected ring: {' + '.join(coll['rings'][0])}" if coll["rings"] else "no rings"
-        stage_callback(4, "Mapping cross-bidder relationships", f"{len(coll['edges'])} edges mapped · {ring_text}")
+    # price forensics: statistical bid-rigging screens over the tender
+    pricef = screen_prices({f.bidder_id: f.price for f in facts_list
+                            if f.price})
+    ledger.append("price_forensics",
+                  {"cv": pricef["stats"].get("cv"),
+                   "findings": [(x["screen"], x["severity"]) for x in
+                                pricef["findings"]]})
 
-    # Stage 5: Issuing verdicts & sealing audit ledger
+    # two-cover scan: price hints hidden in technical bids
+    twocover = {bid: scan_price_hints(pgs)
+                for bid, pgs in bid_pages.items()}
+    ledger.append("twocover_scan",
+                  {"bidders_with_hints": [b for b, h in twocover.items()
+                                          if h]})
+
     for facts in facts_list:
-        v = build_verdict(facts, checks_map[facts.bidder_id], coll["flags"][facts.bidder_id])
+        checks = run_checks(facts, blueprint)
+        v = build_verdict(facts, checks, coll["flags"][facts.bidder_id])
         verdicts.append(v)
         ledger.append("verdict_issued",
                       {"bidder": facts.bidder_id, "verdict": v["verdict"],
@@ -104,11 +152,13 @@ def run(tender_path, bid_paths, ledger=None, stage_callback=None):
                   {"l1": l1["bidder_id"] if l1 else None,
                    "price": l1["price"] if l1 else None})
 
-    if stage_callback:
-        stage_callback(5, "Issuing verdicts & sealing audit ledger", f"{len(ledger.entries)} entries committed to SHA-256 chain")
-
     return {"blueprint": blueprint, "verdicts": verdicts,
             "collusion": {"edges": coll["edges"], "rings": coll["rings"]},
+            "price_forensics": pricef,
+            "doc_forensics": docf,
+            "ml_forensics": {"paraphrase": mlp, "fuzzy": mlf},
+            "tender_integrity": tender_integrity,
+            "twocover": twocover,
             "l1": l1["bidder_id"] if l1 else None,
             "ledger": ledger}
 
@@ -152,6 +202,37 @@ def main():
     if rings:
         print(f"  Suspected cartel ring(s): "
               + "; ".join("+".join(r) for r in rings))
+    pf = result["price_forensics"]
+    if pf["findings"]:
+        print(f"  Price forensics ({pf['n']} bids, CV {pf['stats']['cv']:.2%}):")
+        for x in pf["findings"]:
+            print(f"    [{x['severity']}] {x['screen']}: {x['detail'][:110]}")
+    else:
+        print("  Price forensics: no anomalous screens fired.")
+    df = result["doc_forensics"]
+    if df["findings"]:
+        print(f"  Document forensics: {len(df['findings'])} finding(s)")
+        for x in df["findings"][:6]:
+            print(f"    [{x['severity']}] {x['type']} "
+                  f"({', '.join(x['bidders'])}): {x['detail'][:110]}")
+    tc = result["twocover"]
+    hinted = [b for b, h in tc.items() if h]
+    if hinted:
+        print(f"  Two-cover violations: price hint(s) in technical bid of "
+              f"{', '.join(hinted)}")
+    else:
+        print("  Two-cover scan: clean.")
+    ti = result["tender_integrity"]
+    print(f"  Tender seal: sha256:{ti['seal'][:16]}…")
+    if ti["corrigendum"]:
+        rel = [r for r in ti["relaxations"] if r["type"] == "relaxation"]
+        if rel:
+            print(f"  Corrigendum {ti['corrigendum']}: RELAXED "
+                  + "; ".join(f"{r['requirement']} "
+                              f"Rs. {r['before']:,.0f} → Rs. {r['after']:,.0f}"
+                              for r in rel))
+        else:
+            print(f"  Corrigendum {ti['corrigendum']}: no relaxations.")
     ok, msg = ledger.verify()
     print(f"  Audit chain: {msg}")
     print("=" * 64)

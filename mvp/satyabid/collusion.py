@@ -21,13 +21,24 @@ W_PHONE = 2.5
 W_ADDRESS = 2.0
 W_PRICE = 2.0
 W_AUTHOR = 1.5
+# identity-clustering weights (phantom / single-controller bidders)
+W_PAN = 4.0      # same PAN = same legal entity behind two "bidders"
+W_GSTIN = 3.5
+W_BANK = 3.5     # shared bank account across "competitors"
+W_IP = 3.0       # bids submitted from the same IP (cf. CCI GAIL case)
+W_DSC = 3.0      # same digital-signature token operator
+W_EMAIL = 2.5
 
 
 def _norm_phone(p):
     return "".join(c for c in (p or "") if c.isdigit())
 
 
-def pairwise_signals(a, b):
+def _norm_bank(b):
+    return "".join(c for c in (b or "") if c.isdigit())
+
+
+def pairwise_signals(a, b, doc_pairs=None, ml_pairs=None):
     signals = []
 
     shared = sorted(set(a.directors) & set(b.directors))
@@ -59,6 +70,47 @@ def pairwise_signals(a, b):
                         f"Both bid documents authored on '{auth_a}' "
                         f"(identical PDF metadata)"))
 
+    # --- identity clustering: one controller behind multiple "bidders" ---
+    if a.pan and b.pan and a.pan == b.pan:
+        signals.append(("shared_pan", W_PAN,
+                        f"Same PAN {a.pan} behind two bidders — one legal "
+                        f"entity masquerading as competitors"))
+    if a.gstin and b.gstin and a.gstin == b.gstin:
+        signals.append(("shared_gstin", W_GSTIN,
+                        f"Same GSTIN {a.gstin} across bidders"))
+    if a.bank_account and b.bank_account and \
+            _norm_bank(a.bank_account) == _norm_bank(b.bank_account):
+        signals.append(("shared_bank", W_BANK,
+                        f"Same bank account {a.bank_account} across 'competing' "
+                        f"bidders"))
+    if a.ip_address and b.ip_address and a.ip_address == b.ip_address:
+        signals.append(("shared_ip", W_IP,
+                        f"Bids submitted from the same IP {a.ip_address}"))
+    if a.dsc_operator and b.dsc_operator and \
+            a.dsc_operator.strip().lower() == b.dsc_operator.strip().lower():
+        signals.append(("shared_dsc", W_DSC,
+                        f"Same DSC token operator: {a.dsc_operator}"))
+    if a.email and b.email and a.email == b.email:
+        signals.append(("shared_email", W_EMAIL,
+                        f"Same contact email: {a.email}"))
+
+    # --- document-forensics corroboration (bounded so it can't dominate) ---
+    if doc_pairs:
+        dp = doc_pairs.get(frozenset((a.bidder_id, b.bidder_id)))
+        if dp:
+            signals.append(("common_authorship_markers", dp["weight"],
+                            dp["detail"]))
+
+    # --- ML forensics corroboration (bounded so it can't dominate) ---
+    # ML proposes similarity signals; deterministic rules still decide.
+    if ml_pairs:
+        mp = ml_pairs.get(frozenset((a.bidder_id, b.bidder_id)))
+        if mp:
+            for sig in mp["signals"]:
+                signals.append((sig, round(mp["weight"] / len(mp["signals"]),
+                                           2),
+                                mp["detail"]))
+
     return signals
 
 
@@ -72,14 +124,14 @@ def risk_level(score):
     return "NONE"
 
 
-def analyse_collusion(facts_list):
+def analyse_collusion(facts_list, doc_pairs=None, ml_pairs=None):
     G = nx.Graph()
     for f in facts_list:
         G.add_node(f.bidder_id, name=f.name, price=f.price)
 
     edges = []
     for a, b in itertools.combinations(facts_list, 2):
-        sigs = pairwise_signals(a, b)
+        sigs = pairwise_signals(a, b, doc_pairs=doc_pairs, ml_pairs=ml_pairs)
         if not sigs:
             continue
         score = round(sum(w for _, w, _ in sigs), 2)
